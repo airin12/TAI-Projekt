@@ -16,10 +16,11 @@
     	    <div class="col-xs-12">
         	    <div class="form-wrap">
                 <h3>Welcome to Youtube Analizer!</h3>
-                    <form role="form"  method="post" id="login-form" autocomplete="off">
+                <c:url value="/j_spring_security_check" var="loginUrl" />
+                    <form role="form" action="${loginUrl}"  method="post" id="login-form" autocomplete="off">
                         <div class="form-group">
-                            <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Email">
+                            <label for="username" class="sr-only">Email</label>
+                            <input type="text" name="email" id="email" class="form-control" placeholder="Email">
                         </div>
                         <div class="form-group">
                             <label for="key" class="sr-only">Password</label>

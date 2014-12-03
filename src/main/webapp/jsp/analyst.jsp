@@ -69,7 +69,7 @@
 								<col width="95%">
 								<col width="5%">
 								<tr>
-									<th>Analisys name</th>
+									<th>Analysis name</th>
 									<th></th>
 								</tr>
 								<c:forEach items="${analysis}" var="analysis_list">
@@ -87,8 +87,18 @@
 						</div>
 					</div>
 					<div id="create_analysis" class="tab-pane fade">
-						<h3>Create</h3>
+						<div class="panel panel-default">
+							<div class="panel-heading">Create analysis</div>
+							<form:form commandName="report" role="form">
 
+								<div class="form-group">
+									<form:label path="title">Title</form:label>
+									<form:input path="title" class="form-control" placeholder="Type account number in here" />
+								</div>
+								<button type="submit" class="btn btn-default">Save</button>
+							</form:form>
+
+						</div>
 					</div>
 				</div>
 			</div>

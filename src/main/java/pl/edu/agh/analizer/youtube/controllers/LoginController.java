@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.edu.agh.analizer.youtube.dao.DatabaseDao;
+import pl.edu.agh.analizer.youtube.reports.Report;
 
 @Controller
 public class LoginController {
@@ -43,7 +44,7 @@ public class LoginController {
 	public ModelAndView showAnalystPanel(ModelAndView modelAndView) {
 		userAnalysisList=DatabaseDao.getUsersReportsNames("");
 		modelAndView.addObject("analysis", userAnalysisList);
-		//modelAndView.getModel().put("type1", new AnalysisType1());
+		modelAndView.getModel().put("report", Report.empty());
 		return modelAndView;
 	}
 

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pl.edu.agh.analizer.youtube.interfaces.Analysis;
 import pl.edu.agh.analizer.youtube.model.BasicAnalysis;
 import pl.edu.agh.analizer.youtube.model.TestAnalysis;
+import pl.edu.agh.analizer.youtube.reports.Report;
 
 public class DatabaseDao {
 	
@@ -91,5 +93,13 @@ public class DatabaseDao {
 			}
 		}
 		return analysis;
+	}
+	
+	public static List<String> getReportsNames() {
+		return Collections.EMPTY_LIST;
+	}
+	
+	public static Report getReport(String name) {
+		return Report.empty();
 	}
 }

@@ -2,6 +2,7 @@ package pl.edu.agh.analizer.youtube.reports;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ public class Report {
 	private final Map<String, List<Long>> values;
 	
 	private final String title;
+	
+	private static final Report EMPTY = new Report(Collections.EMPTY_LIST, Collections.EMPTY_MAP, "Empty report");
 	
 	private Report(List<String> columnHeaders, Map<String, List<Long>> values, String title) {
 		
@@ -48,6 +51,10 @@ public class Report {
 		}
 		
 		return new Report(headers, values, title);
+	}
+	
+	public static Report empty() {
+		return EMPTY;
 	}
 	
 	public Map<String, List<Long>> getValues() {

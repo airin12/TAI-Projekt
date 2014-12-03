@@ -15,7 +15,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import pl.edu.agh.analizer.youtube.interfaces.Analysis;
 import pl.edu.agh.analizer.youtube.model.BasicAnalysis;
-import pl.edu.agh.analizer.youtube.model.TestAnalysis;
 import pl.edu.agh.analizer.youtube.reports.Report;
 
 public class DatabaseDao {
@@ -96,6 +95,10 @@ public class DatabaseDao {
 	}
 	
 	public static List<String> getReportsNames() {
+		return Collections.EMPTY_LIST;
+	}
+	
+	public static List<String> getUsersReportsNames(String username) {
 		return Collections.EMPTY_LIST;
 	}
 	

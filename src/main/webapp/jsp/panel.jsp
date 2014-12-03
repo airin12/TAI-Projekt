@@ -47,7 +47,7 @@
 					<li><a href="#" class="list-group-item"> User Panel </a></li>
 
 					<security:authorize access="hasRole('ROLE_ANALYST')">
-						<li><a href="/youtube.analizer/analyst" class="list-group-item"> Analyst Panel </a></li>
+						<li><a href="/youtube.analizer/analyst" class="list-group-item"> Analyst Panel </a>
 					</security:authorize>
 
 				</ul>
@@ -57,17 +57,19 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Available analysis</div>
 				<table class="table table-hover">
+					<col width="95%">
+					<col width="5%">
 					<tr>
 						<th>Analisys name</th>
-						<th>Type</th>
-						<th>User</th>
+						<th></th>
 					</tr>
-					<c:forEach items="${analysis}" var="analysis_list">
+					<c:forEach items="${analysis}" var="analysis_list" varStatus="loop">
 
 						<tr>
 							<td><c:out value="${analysis_list.name}" /></td>
-							<td><c:out value="${analysis_list.type}" /></td>
-							<td><c:out value="${analysis_list.user}" /></td>
+							<td><a class="btn btn-default" href="/youtube.analizer/analysis?index=${loop.index}">
+									<span class="glyphicon glyphicon-eye-open"></span>
+								</a></td>
 						</tr>
 
 					</c:forEach>

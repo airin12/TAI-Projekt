@@ -35,6 +35,11 @@ public class LoginController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "/analyst", method = RequestMethod.GET)
+	public ModelAndView showAnalystPanel(ModelAndView modelAndView) {
+		modelAndView.addObject("analysis", DatabaseDao.getUsersAnalysys(""));
+		return modelAndView;
+	}
 	
 	@RequestMapping(value = "/403", method = RequestMethod.POST)
 	public ModelAndView accesssDenied(Principal user) {

@@ -14,4 +14,10 @@ public class DatabaseDao {
 		analysis.add(new TestAnalysis());
 		return analysis;
 	}
+	
+	public static List<Analysis> getUsersAnalysys(String username){
+		List<Analysis> analysis = new LinkedList<Analysis>();
+		analysis.add(new TestAnalysis());
+		return analysis;
+	}
 }

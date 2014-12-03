@@ -1,14 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="security"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security"%>
 
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -22,8 +20,7 @@
 		<div class="row show-grid">
 			<div class="col-md-2 col-md-offset-10">
 				<c:if test="${pageContext.request.userPrincipal.name != null}">
-			Welcome : ${pageContext.request.userPrincipal.name} | <a
-						href="javascript:formSubmit()"> Logout</a>
+			Welcome : ${pageContext.request.userPrincipal.name} | <a href="javascript:formSubmit()"> Logout</a>
 				</c:if>
 			</div>
 		</div>
@@ -35,8 +32,7 @@
 
 	<!-- csrt for log out-->
 	<form action="${logoutUrl}" method="post" id="logoutForm">
-		<input type="hidden" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	</form>
 
 
@@ -48,11 +44,9 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Available panels</div>
 				<ul class="list-group">
-					<a href="/youtube.analizer/panel" class="list-group-item"> User
-						Panel </a>
+					<a href="#" class="list-group-item"> User Panel </a>
 					<security:authorize access="hasRole('ROLE_ANALYST')">
-						<a href="/youtube.analizer/analyst" class="list-group-item">
-							Analyst Panel </a>
+						<a href="/youtube.analizer/analyst" class="list-group-item"> Analyst Panel </a>
 					</security:authorize>
 				</ul>
 			</div>

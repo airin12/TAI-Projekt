@@ -5,8 +5,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -23,22 +22,17 @@
 							<div class="alert alert-info">${msg}</div>
 						</c:if>
 						<c:url value="/j_spring_security_check" var="loginUrl" />
-						<form role="form" action="${loginUrl}" method="post"
-							id="login-form" autocomplete="off">
+						<form role="form" action="${loginUrl}" method="post" id="login-form" autocomplete="off">
 							<div class="form-group">
-								<label for="username" class="sr-only">Email</label> <input
-									type="text" name="username" id="email" class="form-control"
+								<label for="username" class="sr-only">Email</label> <input type="text" name="username" id="email" class="form-control"
 									placeholder="Username">
 							</div>
 							<div class="form-group">
-								<label for="key" class="sr-only">Password</label> <input
-									type="password" name="password" id="key" class="form-control"
+								<label for="key" class="sr-only">Password</label> <input type="password" name="password" id="key" class="form-control"
 									placeholder="Password">
 							</div>
-							<input type="submit" id="btn-login"
-								class="btn btn-custom btn-lg btn-block" value="Log in">
-							<input type="hidden" name="${_csrf.parameterName}"
-								value="${_csrf.token}" />
+							<input type="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Log in"> <input type="hidden"
+								name="${_csrf.parameterName}" value="${_csrf.token}" />
 						</form>
 						<hr>
 					</div>

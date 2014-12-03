@@ -8,13 +8,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.edu.agh.analizer.youtube.dao.DatabaseDao;
+
 @Controller
 public class LoginController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView prepareLoginPage(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, ModelAndView modelAndView) {
-		
+
+
 		if (error != null) {
 			modelAndView.addObject("error", "Invalid username and password!");
 		}
@@ -28,6 +31,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/panel", method = RequestMethod.GET)
 	public ModelAndView logIn(ModelAndView modelAndView) {
+        modelAndView.addObject("analysis", DatabaseDao.getAvailableAnalysis());
 		return modelAndView;
 	}
 	

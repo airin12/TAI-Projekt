@@ -60,6 +60,23 @@
 		<div class="col-xs-9">
 			<div class="panel panel-default">
 				<div class="panel-heading">Available analysis</div>
+				<table class="table table-hover">
+					<tr>
+						<th>Analisys name</th>
+						<th>Type</th>
+						<th>User</th>
+					</tr>
+					<c:forEach items="${analysis}" var="analysis_list">
+
+						<tr>
+							<td><c:out value="${analysis_list.name}" /></td>
+							<td><c:out value="${analysis_list.type}" /></td>
+							<td><c:out value="${analysis_list.user}" /></td>
+						</tr>
+
+					</c:forEach>
+
+				</table>
 			</div>
 		</div>
 	</div>

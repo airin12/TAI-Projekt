@@ -102,4 +102,9 @@ public class DatabaseDao {
 	public static Report getReport(String name) {
 		return Report.empty();
 	}
+	
+	public static void addReport(Report report, String username) {
+		
+	}
+	
 }

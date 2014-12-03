@@ -60,7 +60,7 @@
 					<col width="95%">
 					<col width="5%">
 					<tr>
-						<th>Analisys name</th>
+						<th>Analysis name</th>
 						<th></th>
 					</tr>
 					<c:forEach items="${analysis}" var="analysis_list" varStatus="loop">

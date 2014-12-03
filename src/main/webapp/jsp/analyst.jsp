@@ -59,13 +59,7 @@
 			<div class="bs-example">
 				<ul class="nav nav-tabs">
 					<li class="active"><a data-toggle="tab" href="#delete_analysis">Delete analysis</a></li>
-					<li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" href="#">Create analysis <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a data-toggle="tab" href="#dropdown1">Type1</a></li>
-							<li><a data-toggle="tab" href="#dropdown2">Type2</a></li>
-							<li><a data-toggle="tab" href="#dropdown3">Type3</a></li>
-						</ul></li>
-
+					<li><a data-toggle="tab" href="#create_analysis">Create analysis</a></li>
 				</ul>
 				<div class="tab-content">
 					<div id="delete_analysis" class="tab-pane fade in active">
@@ -92,15 +86,9 @@
 							</table>
 						</div>
 					</div>
-					<div id="dropdown1" class="tab-pane fade">
-						<h3>Type 1</h3>
+					<div id="create_analysis" class="tab-pane fade">
+						<h3>Create</h3>
 
-					</div>
-					<div id="dropdown2" class="tab-pane fade">
-						<h3>Type 2</h3>
-					</div>
-					<div id="dropdown3" class="tab-pane fade">
-						<h3>Type 3</h3>
 					</div>
 				</div>
 			</div>

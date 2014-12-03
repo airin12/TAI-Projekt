@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
 
 <html>
 <head>
@@ -46,8 +48,12 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Available panels</div>
 				<ul class="list-group">
-					<a href="/youtube.analizer/panel" class="list-group-item"> User Panel </a>
-					<a href="/youtube.analizer/analyst" class="list-group-item"> Analyst Panel </a>
+					<a href="/youtube.analizer/panel" class="list-group-item"> User
+						Panel </a>
+					<security:authorize access="hasRole('ROLE_ANALYST')">
+						<a href="/youtube.analizer/analyst" class="list-group-item">
+							Analyst Panel </a>
+					</security:authorize>
 				</ul>
 			</div>
 		</div>

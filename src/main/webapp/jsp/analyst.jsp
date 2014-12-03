@@ -89,15 +89,33 @@
 					<div id="create_analysis" class="tab-pane fade">
 						<div class="panel panel-default">
 							<div class="panel-heading">Create analysis</div>
-							<form:form commandName="report" role="form">
+							<div class="bs-example">
+								<form:form commandName="report" method="post" action="${pageContext.request.contextPath}/analyst" role="form">
 
-								<div class="form-group">
-									<form:label path="title">Title</form:label>
-									<form:input path="title" class="form-control" placeholder="Type account number in here" />
-								</div>
-								<button type="submit" class="btn btn-default">Save</button>
-							</form:form>
+									<div class="form-group">
+										<form:label path="title">Title</form:label>
+										<form:input path="title" class="form-control" placeholder="Insert title" />
 
+										<form:label path="channelId">Channel Id</form:label>
+										<form:input path="channelId" class="form-control" placeholder="Insert channel id" />
+
+										<form:label path="analysisStartDate">Start date</form:label>
+										<form:input path="analysisStartDate" class="form-control" placeholder="Insert start date" />
+
+										<form:label path="analysisEndDate">End date</form:label>
+										<form:input path="analysisEndDate" class="form-control" placeholder="Insert end date" />
+
+										<form:label path="analysisEndDate">Analysis type</form:label>
+										<form:select path="analysis" class="form-control">
+											<form:option value="views_over_time">Views over time analysis</form:option>
+											<form:option value="top_views">Top views analysis</form:option>
+											<form:option value="third">Third</form:option>
+										</form:select>
+
+									</div>
+									<button type="submit" class="btn btn-default">Save</button>
+								</form:form>
+							</div>
 						</div>
 					</div>
 				</div>

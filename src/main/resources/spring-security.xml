@@ -9,6 +9,8 @@
  	<!-- enable use-expressions -->
 	<security:http auto-config="true" use-expressions="true">
  		
+ 		<security:intercept-url pattern="/panel*" access="hasRole('ROLE_USER')"/>
+ 		
 		<!-- access denied page -->
 		<security:access-denied-handler error-page="/403" />
  

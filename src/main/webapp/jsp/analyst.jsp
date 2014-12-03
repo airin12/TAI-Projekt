@@ -48,9 +48,9 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Available panels</div>
 				<ul class="list-group">
-					<a href="/youtube.analizer/panel" class="list-group-item"> User Panel </a>
+					<li><a href="/youtube.analizer/panel" class="list-group-item"> User Panel </a></li>
 					<security:authorize access="hasRole('ROLE_ANALYST')">
-						<a href="#" class="list-group-item"> Analyst Panel </a>
+						<li><a href="#" class="list-group-item"> Analyst Panel </a></li>
 					</security:authorize>
 				</ul>
 			</div>
@@ -70,8 +70,11 @@
 				<div class="tab-content">
 					<div id="delete_analysis" class="tab-pane fade in active">
 						<div class="panel panel-default">
-							<div class="panel-heading">Delete analysis</div>
+							<div class="panel-heading">Users analysis</div>
 							<table class="table table-hover">
+								<col width="80%">
+								<col width="15%">
+								<col width="5%">
 								<tr>
 									<th>Analisys name</th>
 									<th>Type</th>
@@ -81,6 +84,9 @@
 									<tr>
 										<td><c:out value="${analysis_list.name}" /></td>
 										<td><c:out value="${analysis_list.type}" /></td>
+										<td><button type="button" class="btn btn-default">
+												<span class="glyphicon glyphicon-remove"></span>
+											</button></td>
 									</tr>
 
 								</c:forEach>

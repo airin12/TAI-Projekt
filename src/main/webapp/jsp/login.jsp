@@ -22,7 +22,7 @@
 							<div class="alert alert-info">${msg}</div>
 						</c:if>
 						<c:url value="/j_spring_security_check" var="loginUrl" />
-						<form role="form" action="${loginUrl}" method="post" id="login-form" autocomplete="off">
+						<form action="${loginUrl}" method="post" id="login-form" autocomplete="off">
 							<div class="form-group">
 								<label for="username" class="sr-only">Email</label> <input type="text" name="username" id="email" class="form-control"
 									placeholder="Username">

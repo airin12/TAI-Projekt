@@ -44,10 +44,12 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Available panels</div>
 				<ul class="list-group">
-					<a href="#" class="list-group-item"> User Panel </a>
+					<li><a href="#" class="list-group-item"> User Panel </a></li>
+
 					<security:authorize access="hasRole('ROLE_ANALYST')">
-						<a href="/youtube.analizer/analyst" class="list-group-item"> Analyst Panel </a>
+						<li><a href="/youtube.analizer/analyst" class="list-group-item"> Analyst Panel </a></li>
 					</security:authorize>
+
 				</ul>
 			</div>
 		</div>

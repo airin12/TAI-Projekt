@@ -41,23 +41,23 @@
 
 
 
-<div class="row">
-  <div class="col-xs-2">
-  	<div class="panel panel-default">
-		<div class="panel-heading">Available panels</div>
-		<ul class="list-group">
-			<li class="list-group-item">User Panel</li>
-			<li class="list-group-item">Analyst Panel</li>
-		</ul>
+	<div class="row">
+		<div class="col-xs-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">Available panels</div>
+				<ul class="list-group">
+					<a href="/youtube.analizer/panel" class="list-group-item"> User Panel </a>
+					<a href="/youtube.analizer/analyst" class="list-group-item"> Analyst Panel </a>
+				</ul>
+			</div>
+		</div>
+		<div class="col-xs-9">
+			<div class="panel panel-default">
+				<div class="panel-heading">Available analysis</div>
+			</div>
+		</div>
 	</div>
-  </div>
-    <div class="col-xs-9">
-  	<div class="panel panel-default">
-		<div class="panel-heading">Available analysis</div>
-	</div>
-  </div>
-</div>
-	
+
 
 </body>
 </html>

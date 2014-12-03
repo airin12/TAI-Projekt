@@ -8,8 +8,9 @@
 
  	<!-- enable use-expressions -->
 	<security:http auto-config="true" use-expressions="true">
- 		<security:intercept-url pattern="/login*" access="permitAll()" />
-		<security:intercept-url pattern="/panel*" access="permitAll()" />
+ 		
+ 		<security:intercept-url pattern="/panel*" access="hasRole('ROLE_USER')"/>
+ 		<security:intercept-url pattern="/analyst*" access="hasRole('ROLE_ANALYST')"/>
  		
 		<!-- access denied page -->
 		<security:access-denied-handler error-page="/403" />
@@ -17,10 +18,10 @@
 		<security:form-login 
 		    login-page="/login" 
 		    default-target-url="/panel" 
-			authentication-failure-url="/error" 
+			authentication-failure-url="/login?error" 
 			username-parameter="username"
 			password-parameter="password" />
-		<security:logout logout-success-url="/logout"  />
+		<security:logout logout-success-url="/login?logout"  />
 		<!-- enable csrf protection -->
 		<security:csrf/>
 	</security:http>
@@ -30,10 +31,11 @@
 	  <security:authentication-provider>
 		<security:jdbc-user-service data-source-ref="dataSource"
 		  users-by-username-query=
-		    "select username,password from users where username=?"
+		    "select username,password, enabled from users where username=?"
 		  authorities-by-username-query=
 		    "select username, role from user_roles where username =?  " />
 	  </security:authentication-provider>
 	</security:authentication-manager>
+	 <bean id="webSecurityExpressionHandler" class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler" />
 	
 </beans>

@@ -72,19 +72,16 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">Users analysis</div>
 							<table class="table table-hover">
-								<col width="80%">
-								<col width="15%">
+								<col width="95%">
 								<col width="5%">
 								<tr>
 									<th>Analisys name</th>
-									<th>Type</th>
 									<th></th>
 								</tr>
 								<c:forEach items="${analysis}" var="analysis_list">
 
 									<tr>
-										<td><c:out value="${analysis_list.name}" /></td>
-										<td><c:out value="${analysis_list.type}" /></td>
+										<td><c:out value="${analysis_list}" /></td>
 										<td><button type="button" class="btn btn-default">
 												<span class="glyphicon glyphicon-remove"></span>
 											</button></td>
@@ -97,17 +94,7 @@
 					</div>
 					<div id="dropdown1" class="tab-pane fade">
 						<h3>Type 1</h3>
-						<form:form commandName="type1" method="post" action="${pageContext.request.contextPath}/user/transactions/enlist" role="form">
 
-							<h3>Create new analysys:</h3>
-
-							<div class="form-group">
-								<form:label path="name">Analysis name</form:label>
-								<form:input path="name" class="form-control" placeholder="Analysis name" />
-
-							</div>
-							<button type="submit" class="btn btn-default">Save</button>
-						</form:form>
 					</div>
 					<div id="dropdown2" class="tab-pane fade">
 						<h3>Type 2</h3>

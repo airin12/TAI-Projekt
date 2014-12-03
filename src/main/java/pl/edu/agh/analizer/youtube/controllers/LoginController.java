@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.edu.agh.analizer.youtube.dao.DatabaseDao;
-import pl.edu.agh.analizer.youtube.model.AnalysisType1;
 
 @Controller
 public class LoginController {
 
 	private List<String> analysisList=null;
+	private List<String> userAnalysisList=null;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView prepareLoginPage(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout,
@@ -41,10 +41,9 @@ public class LoginController {
 
 	@RequestMapping(value = "/analyst", method = RequestMethod.GET)
 	public ModelAndView showAnalystPanel(ModelAndView modelAndView) {
-		modelAndView.addObject("analysis", DatabaseDao.getUsersAnalysys(""));
-		modelAndView.getModel().put("type1", new AnalysisType1());
-		// modelAndView.getModel().put("type2", new AnalysisType1());
-		// modelAndView.getModel().put("type3", new AnalysisType1());
+		userAnalysisList=DatabaseDao.getUsersReportsNames("");
+		modelAndView.addObject("analysis", userAnalysisList);
+		//modelAndView.getModel().put("type1", new AnalysisType1());
 		return modelAndView;
 	}
 

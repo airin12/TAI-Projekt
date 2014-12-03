@@ -66,7 +66,7 @@
 					<c:forEach items="${analysis}" var="analysis_list" varStatus="loop">
 
 						<tr>
-							<td><c:out value="${analysis_list.name}" /></td>
+							<td><c:out value="${analysis_list}" /></td>
 							<td><a class="btn btn-default" href="/youtube.analizer/analysis?index=${loop.index}">
 									<span class="glyphicon glyphicon-eye-open"></span>
 								</a></td>

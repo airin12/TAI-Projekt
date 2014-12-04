@@ -270,7 +270,7 @@ public class DatabaseDao {
 		return id;
 	}
 	
-	private static void executeInsert(String query) {
+	private static void executeUpdate(String query) {
 		Connection conn = null;
 		
 		try {
@@ -331,12 +331,32 @@ public class DatabaseDao {
 		for (Map.Entry<String, List<Long>> e : report.getValues().entrySet()) {
 			for (int i = 0; i < e.getValue().size(); i++) {
 				String sql = "INSERT INTO ANALYSIS_VALUE(VALUE, ROWID, COLUMNID) VALUES(" + e.getValue().get(i) + "," + rowIDs.get((long)i) + "," + columnIDs.get(e.getKey()) + ")";
-				executeInsert(sql);
+				executeUpdate(sql);
 			}
 		}
 	}
+	
+	
 
 	public static boolean removeRaport(String name){
+		
+		String deleteValuesSQL = "DELETE FROM ANALYSIS_VALUE " +
+								 "WHERE COLUMNID IN (SELECT C.ID FROM ANALYSIS_COLUMN C " +
+								 					"INNER JOIN ANALYSIS AN ON AN.ID = C.ANALYSISID " +
+								 					"WHERE AN.TITLE = '" + name + "')";	
+		String deleteRowsSql = "DELETE FROM ANALYSIS_ROW " +
+							   "WHERE ANALYSISID IN (SELECT ID FROM ANALYSIS " +
+							   						"WHERE TITLE = '" + name + "')";
+		String deleteColumnsSql = "DELETE FROM ANALYSIS_COLUMN " +
+				   				  "WHERE ANALYSISID IN (SELECT ID FROM ANALYSIS " +
+				   				  					   "WHERE TITLE = '" + name + "')";
+		String deleteAnalysisSql = "DELETE FROM ANALYSIS WHERE TITLE = '" + name + "'";
+		
+		executeUpdate(deleteValuesSQL);
+		executeUpdate(deleteColumnsSql);
+		executeUpdate(deleteRowsSql);
+		executeUpdate(deleteAnalysisSql);
+		
 		return true;
 	}
 	
@@ -370,6 +390,8 @@ public class DatabaseDao {
 //		for (String s : getReportsNames()) {
 //			System.out.println(s);
 //		}
+		
+		removeRaport("JAVA_ANALIZA");
 	}
 
 }

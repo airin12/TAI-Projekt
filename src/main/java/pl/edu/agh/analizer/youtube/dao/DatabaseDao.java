@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +19,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pl.edu.agh.analizer.youtube.interfaces.Analysis;
 import pl.edu.agh.analizer.youtube.model.BasicAnalysis;
 import pl.edu.agh.analizer.youtube.reports.Report;
+
+import com.google.common.collect.Lists;
 
 public class DatabaseDao {
 
@@ -237,23 +239,19 @@ public class DatabaseDao {
 
 		return new Report(columnNames, values, reportName);
 	}
-
-	private static long saveAnalysisAndGetID(Report report, String username) {
-		
-		String sql = "INSERT INTO ANALYSIS(TITLE, USERNAME) VALUES('" + report.getTitle() + "','" + username + "')";
-		System.out.println(sql);
+	
+	private static long executeInsertQueryAndGetID(String query, int idIndex) {
 		Connection conn = null;
 		long id = -1;
-
+		
 		try {
 			conn = dataSource.getConnection();
 			Statement statement = conn.createStatement();
-			int res = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
-			System.out.println("res = " + res);
+			int res = statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
 
 			ResultSet rs = statement.getGeneratedKeys();
 			if (rs.next()) {
-				id = rs.getLong(2);
+				id = rs.getLong(idIndex);
 			}
 
 			statement.close();
@@ -272,14 +270,70 @@ public class DatabaseDao {
 		return id;
 	}
 	
+	private static void executeInsert(String query) {
+		Connection conn = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			Statement statement = conn.createStatement();
+			statement.executeUpdate(query);
+			statement.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+
+				}
+			}
+		}
+	}
+
+	private static long saveAnalysisAndGetID(Report report, String username) {
+		
+		String sql = "INSERT INTO ANALYSIS(TITLE, USERNAME) VALUES('" + report.getTitle() + "','" + username + "')";
+		long id = executeInsertQueryAndGetID(sql, 2);
+		
+		return id;
+	}
+	
 	private static Map<Long, Long> saveRowsAndGetIDs(Report report, Long analysisID) {
 		
 		Map<Long, Long> ids = new HashMap<Long, Long>();
 		
-		
+		for (int i = 0; i < report.getRowCount(); i++) {
+			String sql = "INSERT INTO ANALYSIS_ROW(ANALYSISID, ROW_NUMBER) VALUES(" + analysisID + "," + i + ")";
+			long id = executeInsertQueryAndGetID(sql, 1);
+			ids.put((long)i, id);
+		}
 		
 		return ids;
 		
+	}
+	
+	private static Map<String, Long> saveColumnsAndGetIDs(Report report, Long analysisID) {
+		
+		Map<String, Long> ids = new HashMap<String, Long>();
+		
+		for (String columnName : report.getColumnHeaders()) {
+			String sql = "INSERT INTO ANALYSIS_COLUMN(ANALYSISID, TITLE) VALUES(" + analysisID + ",'" + columnName + "')";
+			long id = executeInsertQueryAndGetID(sql, 1);
+			ids.put(columnName, id);
+		}
+		
+		return ids;
+	}
+	
+	private static void saveValues(Map<Long, Long> rowIDs, Map<String, Long> columnIDs, Report report) {
+		
+		for (Map.Entry<String, List<Long>> e : report.getValues().entrySet()) {
+			for (int i = 0; i < e.getValue().size(); i++) {
+				String sql = "INSERT INTO ANALYSIS_VALUE(VALUE, ROWID, COLUMNID) VALUES(" + e.getValue().get(i) + "," + rowIDs.get((long)i) + "," + columnIDs.get(e.getKey()) + ")";
+				executeInsert(sql);
+			}
+		}
 	}
 
 	public static boolean removeRaport(String name){
@@ -289,24 +343,33 @@ public class DatabaseDao {
 	public static void addReport(Report report, String username) {
 
 		long analysisID = saveAnalysisAndGetID(report, username);
-		System.out.println(analysisID);
+		Map<Long, Long> rowIDs = saveRowsAndGetIDs(report, analysisID);
+		Map<String, Long> columnIDs = saveColumnsAndGetIDs(report, analysisID);
+		saveValues(rowIDs, columnIDs, report);
 	}
 
 	public static void main(String[] args) {
-
-//		Report report = getReport("Analiza1");
+		
+//		Map<String, List<Long>> map = new HashMap<String, List<Long>>();
+//		map.put("SOMEVALUE", Lists.newArrayList(1l,2l,3l,4l));
+//		map.put("SOMEOTHERVALUE", Lists.newArrayList(5l,8l,10l,1l));
+//		
+//		
+//		Report report = new Report(Lists.newArrayList("SOMEVALUE", "SOMEOTHERVALUE"), map, "JAVA_ANALIZA");
+//		addReport(report, "palys");
 //
-//		for (Map.Entry<String, List<Long>> e : report.getValues().entrySet()) {
+//		Report ret = getReport("JAVA_ANALIZA");
+//
+//		for (Map.Entry<String, List<Long>> e : ret.getValues().entrySet()) {
 //			System.out.println(e.getKey());
 //			for (Long l : e.getValue()) {
 //				System.out.println(l);
 //			}
 //		}
-		addReport(Report.empty(), "palys");
-		
-		for (String s : getReportsNames()) {
-			System.out.println(s);
-		}
+//		
+//		for (String s : getReportsNames()) {
+//			System.out.println(s);
+//		}
 	}
 
 }

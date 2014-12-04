@@ -77,5 +77,9 @@ public class Report {
 	public int getRowCount() {
 		return rowCount;
 	}
+	
+	public List<String> getColumnHeaders() {
+		return columnHeaders;
+	}
 
 }

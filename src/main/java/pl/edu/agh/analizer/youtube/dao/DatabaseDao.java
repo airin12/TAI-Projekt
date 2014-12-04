@@ -99,7 +99,6 @@ public class DatabaseDao {
 	}
 
 	public static List<String> getReportsNames() {
-
 		String sql = "SELECT * FROM ANALYSIS";
 		Connection conn = null;
 		List<String> names = new LinkedList<String>();

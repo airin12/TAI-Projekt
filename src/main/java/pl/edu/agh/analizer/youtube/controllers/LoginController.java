@@ -109,14 +109,8 @@ public class LoginController {
 	@RequestMapping(value = "/analysis", method = RequestMethod.GET)
 	public ModelAndView getAnalysisPage(@RequestParam(value = "title", required = true) String title, ModelAndView modelAndView) {
 		Report report = DatabaseDao.getReport(title);
-		Collection<String> labels = new LinkedList<String>();
-		labels.add("1");
-		labels.add("2");
-		Collection<String> data = new LinkedList<String>();
-		data.add("111");
-		data.add("121");
-		modelAndView.addObject("labels", labels);
-		modelAndView.addObject("data", data);
+		modelAndView.addObject("labels", report.getChartLabels());
+		modelAndView.addObject("data", report.getChartData());
 		return modelAndView;
 	}
 	

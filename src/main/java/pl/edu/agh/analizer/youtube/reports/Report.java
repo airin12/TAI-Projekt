@@ -1,10 +1,10 @@
 package pl.edu.agh.analizer.youtube.reports;
 
 import java.math.BigDecimal;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +36,7 @@ public class Report {
 		}
 	}
 	
-	public static Report ofResultTable(ResultTable table, String title) {
+	public static Report ofResultTable(ResultTable table, String title) throws IllegalArgumentException{
 		
 		if (table.getRows() == null || table.getRows().isEmpty()) {
 			throw new IllegalArgumentException("No results found.");
@@ -81,5 +81,23 @@ public class Report {
 	public List<String> getColumnHeaders() {
 		return columnHeaders;
 	}
+	
+	public List<String> getChartLabels(){
+		//mock zeby bylo cos widac na wykresie
+		List<String> list = new LinkedList<String>();
+		list.add("01");
+		list.add("02");
+		list.add("03");
+		return list;
+	}
 
+	public List<Integer> getChartData(){
+		//mock zeby bylo cos widac na wykresie
+		List<Integer> list = new LinkedList<Integer>();
+		list.add(100);
+		list.add(121);
+		list.add(107);
+		return list;
+	}
+	
 }

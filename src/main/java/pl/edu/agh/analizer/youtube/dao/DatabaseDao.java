@@ -367,6 +367,31 @@ public class DatabaseDao {
 		Map<String, Long> columnIDs = saveColumnsAndGetIDs(report, analysisID);
 		saveValues(rowIDs, columnIDs, report);
 	}
+	
+	public static void addUser(String username, String password, boolean isAnalyst) {
+		
+		String sql = "INSERT INTO USERS VALUES('" + username + "','" + password + "',True)";
+		executeUpdate(sql);
+		
+		String sqlRolePrefix = "INSERT INTO USER_ROLES(USERNAME, ROLE) VALUES('" + username + "',";
+		String sqlRoleUserSufix = "'ROLE_USER')";
+		String sqlRoleAnalystSufix = "'ROLE_ANALYST')";
+		
+		executeUpdate(sqlRolePrefix + sqlRoleUserSufix);
+		
+		if (isAnalyst) {
+			executeUpdate(sqlRolePrefix + sqlRoleAnalystSufix);
+		}
+	}
+	
+	public static void deleteUser(String username) {
+		
+		String deleteUserRolesSql = "DELETE FROM USER_ROLES WHERE USERNAME = '" + username + "'";
+		String deleteUserSql = "DELETE FROM USERS WHERE USERNAME = '" + username + "'";
+		
+		executeUpdate(deleteUserRolesSql);
+		executeUpdate(deleteUserSql);
+	}
 
 	public static void main(String[] args) {
 		
@@ -391,7 +416,9 @@ public class DatabaseDao {
 //			System.out.println(s);
 //		}
 		
-		removeRaport("JAVA_ANALIZA");
+		deleteUser("bbb");
+		
+		//removeRaport("JAVA_ANALIZA");
 	}
 
 }

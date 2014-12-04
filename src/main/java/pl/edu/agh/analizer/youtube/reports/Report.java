@@ -1,6 +1,7 @@
 package pl.edu.agh.analizer.youtube.reports;
 
 import java.math.BigDecimal;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,11 +21,19 @@ public class Report {
 	
 	private static final Report EMPTY = new Report(Collections.EMPTY_LIST, Collections.EMPTY_MAP, "Empty report");
 	
-	private Report(List<String> columnHeaders, Map<String, List<Long>> values, String title) {
+	private final int rowCount;
+	
+	public Report(List<String> columnHeaders, Map<String, List<Long>> values, String title) {
 		
 		this.columnHeaders = new ArrayList<String>(columnHeaders);
 		this.values = new HashMap<String, List<Long>>(values);
 		this.title = title;
+		
+		if (columnHeaders.isEmpty()) {
+			rowCount = 0;
+		} else {
+			rowCount = values.get(columnHeaders.get(0)).size();
+		}
 	}
 	
 	public static Report ofResultTable(ResultTable table, String title) {
@@ -63,6 +72,10 @@ public class Report {
 	
 	public String getTitle() {
 		return title;
+	}
+	
+	public int getRowCount() {
+		return rowCount;
 	}
 
 }

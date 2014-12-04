@@ -67,7 +67,7 @@
 
 						<tr>
 							<td><c:out value="${analysis_list}" /></td>
-							<td><a class="btn btn-default" href="/youtube.analizer/analysis?index=${loop.index}">
+							<td><a class="btn btn-default" href="/youtube.analizer/analysis?title=${analysis_list}">
 									<span class="glyphicon glyphicon-eye-open"></span>
 								</a></td>
 						</tr>

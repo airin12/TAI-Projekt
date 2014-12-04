@@ -2,6 +2,8 @@ package pl.edu.agh.analizer.youtube.controllers;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -105,10 +107,17 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/analysis", method = RequestMethod.GET)
-	public ModelAndView getAnalysisPage(@RequestParam(value = "index", required = true) String index, ModelAndView modelAndView) {
-		String analysisName = analysisList.get(Integer.parseInt(index));
-		ModelAndView newModelAndView = new ModelAndView("show?name" + analysisName);
-		return newModelAndView;
+	public ModelAndView getAnalysisPage(@RequestParam(value = "title", required = true) String title, ModelAndView modelAndView) {
+		Report report = DatabaseDao.getReport(title);
+		Collection<String> labels = new LinkedList<String>();
+		labels.add("1");
+		labels.add("2");
+		Collection<String> data = new LinkedList<String>();
+		data.add("111");
+		data.add("121");
+		modelAndView.addObject("labels", labels);
+		modelAndView.addObject("data", data);
+		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/remove", method = RequestMethod.GET)
@@ -120,4 +129,5 @@ public class LoginController {
 		newModelAndView.getModel().put("report", new ReportHelper());
 		return newModelAndView;
 	}
+	
 }

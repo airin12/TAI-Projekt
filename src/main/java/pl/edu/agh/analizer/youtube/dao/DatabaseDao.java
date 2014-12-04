@@ -106,6 +106,10 @@ public class DatabaseDao {
 		return Report.empty();
 	}
 	
+	public static boolean removeRaport(String name){
+		return true;
+	}
+	
 	public static void addReport(Report report, String username) {
 		
 	}

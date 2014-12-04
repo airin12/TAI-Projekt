@@ -1,8 +1,10 @@
 package pl.edu.agh.analizer.youtube.reports;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,11 +21,24 @@ public class Report {
 	
 	private final String title;
 	
-	private static final Report EMPTY = new Report(Collections.EMPTY_LIST, Collections.EMPTY_MAP, "Empty report");
+	private static final Report EMPTY = new Report();
 	
 	private final int rowCount;
 	
+	private final List<String> labels;
+	
+	private final List<Integer> valuesList;
+	
+	private final String DATE_HEADER = "DATE";
+	
+	private final String RAW_HEADER = "RAW_HEADER";
+	
+	private final String VALUE_HEADER = "VALUE_HEADER";
+	
 	public Report(List<String> columnHeaders, Map<String, List<Long>> values, String title) {
+		System.out.println(columnHeaders);
+		System.out.println(title);
+		System.out.println(values);
 		
 		this.columnHeaders = new ArrayList<String>(columnHeaders);
 		this.values = new HashMap<String, List<Long>>(values);
@@ -34,6 +49,41 @@ public class Report {
 		} else {
 			rowCount = values.get(columnHeaders.get(0)).size();
 		}
+		
+		
+		valuesList = new LinkedList<Integer>();
+		if (values.containsKey(VALUE_HEADER)) {
+			for (Long value : values.get(VALUE_HEADER)) {
+				valuesList.add(value.intValue());
+			}
+		} else {
+			throw new RuntimeException("Report does not contain values");
+		}
+		
+		labels = new LinkedList<String>();
+		if (values.containsKey(DATE_HEADER)) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+			for (Long l : values.get(DATE_HEADER)) {
+				labels.add(format.format(new Date(l)));
+			}
+		} else if (values.containsKey(RAW_HEADER)) {
+			for (Long l : values.get(RAW_HEADER)) {
+				labels.add(l.toString());
+			}
+		} else {
+			for (int i = 0; i < rowCount; i++) {
+				labels.add(Integer.toString(i));
+			}
+		}
+	}
+	
+	private Report() {
+		this.columnHeaders = Collections.EMPTY_LIST;
+		this.labels = Collections.EMPTY_LIST;
+		this.values = Collections.EMPTY_MAP;
+		this.valuesList = Collections.EMPTY_LIST;
+		this.rowCount = 0;
+		this.title = "EMPTY";
 	}
 	
 	public static Report ofResultTable(ResultTable table, String title) throws IllegalArgumentException{
@@ -83,21 +133,14 @@ public class Report {
 	}
 	
 	public List<String> getChartLabels(){
-		//mock zeby bylo cos widac na wykresie
-		List<String> list = new LinkedList<String>();
-		list.add("01");
-		list.add("02");
-		list.add("03");
-		return list;
+
+		System.out.println(labels);
+		return labels;
 	}
 
 	public List<Integer> getChartData(){
-		//mock zeby bylo cos widac na wykresie
-		List<Integer> list = new LinkedList<Integer>();
-		list.add(100);
-		list.add(121);
-		list.add(107);
-		return list;
+
+		return valuesList;
 	}
 	
 }

@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -394,28 +396,37 @@ public class DatabaseDao {
 
 	public static void main(String[] args) {
 		
-//		Map<String, List<Long>> map = new HashMap<String, List<Long>>();
-//		map.put("SOMEVALUE", Lists.newArrayList(1l,2l,3l,4l));
-//		map.put("SOMEOTHERVALUE", Lists.newArrayList(5l,8l,10l,1l));
-//		
-//		
-//		Report report = new Report(Lists.newArrayList("SOMEVALUE", "SOMEOTHERVALUE"), map, "JAVA_ANALIZA");
-//		addReport(report, "palys");
-//
-//		Report ret = getReport("JAVA_ANALIZA");
-//
-//		for (Map.Entry<String, List<Long>> e : ret.getValues().entrySet()) {
-//			System.out.println(e.getKey());
-//			for (Long l : e.getValue()) {
-//				System.out.println(l);
-//			}
-//		}
-//		
-//		for (String s : getReportsNames()) {
-//			System.out.println(s);
-//		}
+		removeRaport("PLOOT");
 		
-		deleteUser("bbb");
+		Map<String, List<Long>> map = new HashMap<String, List<Long>>();
+		map.put("VALUE_HEADER", Lists.newArrayList(1l,8l,3l,4l));
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-mm-dd");
+		
+		try {
+			map.put("DATE", Lists.newArrayList(f.parse("2014-11-01").getTime(),f.parse("2014-12-02").getTime(),f.parse("2014-12-03").getTime(),f.parse("2014-12-04").getTime()));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		System.out.println(map);
+		Report report = new Report(Lists.newArrayList("VALUE_HEADER", "DATE"), map, "PLOOT");
+		addReport(report, "palys");
+
+		Report ret = getReport("PLOOT");
+
+		for (Map.Entry<String, List<Long>> e : ret.getValues().entrySet()) {
+			System.out.println(e.getKey());
+			for (Long l : e.getValue()) {
+				System.out.println(l);
+			}
+		}
+		
+		for (String s : getReportsNames()) {
+			System.out.println(s);
+		}
+		
+		//deleteUser("bbb");
 		
 		//removeRaport("JAVA_ANALIZA");
 	}

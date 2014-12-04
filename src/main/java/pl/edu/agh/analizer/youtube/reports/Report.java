@@ -62,7 +62,8 @@ public class Report {
 		
 		labels = new LinkedList<String>();
 		if (values.containsKey(DATE_HEADER)) {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+			//SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+			SimpleDateFormat format = new SimpleDateFormat("mm");
 			for (Long l : values.get(DATE_HEADER)) {
 				labels.add(format.format(new Date(l)));
 			}

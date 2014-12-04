@@ -403,7 +403,7 @@ public class DatabaseDao {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-mm-dd");
 		
 		try {
-			map.put("DATE", Lists.newArrayList(f.parse("2014-11-01").getTime(),f.parse("2014-12-02").getTime(),f.parse("2014-12-03").getTime(),f.parse("2014-12-04").getTime()));
+			map.put("DATE", Lists.newArrayList(f.parse("2014-08-01").getTime(),f.parse("2014-09-01").getTime(),f.parse("2014-10-01").getTime(),f.parse("2014-11-01").getTime()));
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

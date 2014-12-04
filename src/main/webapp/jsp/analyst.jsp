@@ -72,13 +72,13 @@
 									<th>Analysis name</th>
 									<th></th>
 								</tr>
-								<c:forEach items="${analysis}" var="analysis_list">
+								<c:forEach items="${analysis}" var="analysis_list" varStatus="loop">
 
 									<tr>
 										<td><c:out value="${analysis_list}" /></td>
-										<td><button type="button" class="btn btn-default">
-												<span class="glyphicon glyphicon-remove"></span>
-											</button></td>
+										<td><a class="btn btn-default" href="/youtube.analizer/remove?title=${analysis_list}"> <span
+												class="glyphicon glyphicon-remove"></span>
+										</a></td>
 									</tr>
 
 								</c:forEach>

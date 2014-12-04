@@ -282,14 +282,14 @@ public class DatabaseDao {
 		
 	}
 
+	public static boolean removeRaport(String name){
+		return true;
+	}
+	
 	public static void addReport(Report report, String username) {
 
 		long analysisID = saveAnalysisAndGetID(report, username);
 		System.out.println(analysisID);
-	}
-	
-	public static boolean removeRaport(String name){
-		return true;
 	}
 
 	public static void main(String[] args) {

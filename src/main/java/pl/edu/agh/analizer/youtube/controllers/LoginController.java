@@ -49,8 +49,8 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/analyst", method = RequestMethod.GET)
-	public ModelAndView showAnalystPanel(ModelAndView modelAndView) {
-		userAnalysisList = DatabaseDao.getUsersReportsNames("");
+	public ModelAndView showAnalystPanel(ModelAndView modelAndView, Principal user) {
+		userAnalysisList = DatabaseDao.getUsersReportsNames(user.getName());
 		modelAndView.addObject("analysis", userAnalysisList);
 		modelAndView.getModel().put("report", new ReportHelper());
 		return modelAndView;
@@ -106,9 +106,18 @@ public class LoginController {
 
 	@RequestMapping(value = "/analysis", method = RequestMethod.GET)
 	public ModelAndView getAnalysisPage(@RequestParam(value = "index", required = true) String index, ModelAndView modelAndView) {
-		// String type = analysisList.get(Integer.parseInt(index)).getType();
 		String analysisName = analysisList.get(Integer.parseInt(index));
 		ModelAndView newModelAndView = new ModelAndView("show?name" + analysisName);
+		return newModelAndView;
+	}
+	
+	@RequestMapping(value = "/remove", method = RequestMethod.GET)
+	public ModelAndView removeAnalysis(@RequestParam(value = "title", required = true) String title, ModelAndView modelAndView, Principal user) {
+		if(DatabaseDao.removeRaport(title))
+			userAnalysisList=DatabaseDao.getUsersReportsNames(user.getName());
+		ModelAndView newModelAndView = new ModelAndView("analyst");
+		newModelAndView.addObject("analysis", userAnalysisList);
+		newModelAndView.getModel().put("report", new ReportHelper());
 		return newModelAndView;
 	}
 }

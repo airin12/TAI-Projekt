@@ -9,15 +9,15 @@
  	<!-- enable use-expressions -->
 	<security:http auto-config="true" use-expressions="true">
  		
- 		<security:intercept-url pattern="/panel*" access="hasRole('ROLE_USER')"/>
+ 		<security:intercept-url pattern="/user*" access="hasRole('ROLE_USER')"/>
  		<security:intercept-url pattern="/analyst*" access="hasRole('ROLE_ANALYST')"/>
  		
 		<!-- access denied page -->
-		<security:access-denied-handler error-page="/403" />
+		<security:access-denied-handler error-page="/error/403" />
  
 		<security:form-login 
 		    login-page="/login" 
-		    default-target-url="/panel" 
+		    default-target-url="/user/panel" 
 			authentication-failure-url="/login?error" 
 			username-parameter="username"
 			password-parameter="password" />

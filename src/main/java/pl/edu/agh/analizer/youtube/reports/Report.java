@@ -106,7 +106,7 @@ public class Report {
 		for (List<Object> row : table.getRows()) {
 			for (int i = 0; i < table.getColumnHeaders().size(); i++) {
 				String headerName = table.getColumnHeaders().get(i).getName();
-				long value = ((BigDecimal) row.get(i)).longValue();
+				long value = Long.parseLong((String)row.get(i));
 				values.get(headerName).add(value);
 			}
 		}

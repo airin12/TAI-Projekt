@@ -21,6 +21,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import pl.edu.agh.analizer.youtube.interfaces.Analysis;
 import pl.edu.agh.analizer.youtube.model.BasicAnalysis;
 import pl.edu.agh.analizer.youtube.reports.Report;
+import pl.edu.agh.analizer.youtube.reports.ReportHelper;
 
 import com.google.common.collect.Lists;
 
@@ -238,7 +239,8 @@ public class DatabaseDao {
 			}
 		}
 
-		return new Report(columnNames, values, reportName);
+		//TODO trzeba wstawic typ raportu do bazy i w tym miejscu wstawic go zamiast pustego stringa
+		return new Report(columnNames, values, reportName,"");
 	}
 	
 	private static long executeInsertQueryAndGetID(String query, int idIndex) {
@@ -410,7 +412,7 @@ public class DatabaseDao {
 		}
 		
 		System.out.println(map);
-		Report report = new Report(Lists.newArrayList("VALUE_HEADER", "DATE"), map, "PLOOT");
+		Report report = new Report(Lists.newArrayList("VALUE_HEADER", "DATE"), map, "PLOOT",ReportHelper.TOP_VIDEOS);
 		addReport(report, "marcin");
 
 		Report ret = getReport("PLOOT");

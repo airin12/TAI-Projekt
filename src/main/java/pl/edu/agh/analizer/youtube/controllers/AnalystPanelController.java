@@ -60,9 +60,10 @@ public class AnalystPanelController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
 
 		if (rs != null) {
-			youtubeReport = Report.ofResultTable(rs, report.getTitle());
+			youtubeReport = Report.ofResultTable(rs, report.getTitle(),report.getAnalysis());
 			if (!youtubeReport.getTitle().equals("EMPTY"))
 				DatabaseDao.addReport(youtubeReport, user.getName());
 		}

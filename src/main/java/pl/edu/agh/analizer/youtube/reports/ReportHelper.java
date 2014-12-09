@@ -8,8 +8,8 @@ public class ReportHelper {
 	private String analysis;
 	
 	public static final String VIEWS_OVER_TIME = "views_over_time";
-	public static final String TOP_VIDEOS = "top_videos";
-	public static final String TOP_VIDEOS_PLOT = "top_videos_plot";
+	public static final String TOP_VIDEOS_10 = "top_videos_10";
+	public static final String TOP_VIDEOS_ALL = "top_videos_all";
 	
 	public String getTitle() {
 		return title;

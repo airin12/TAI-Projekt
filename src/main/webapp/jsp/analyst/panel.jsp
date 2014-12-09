@@ -108,8 +108,8 @@
 										<form:label path="analysisEndDate">Analysis type</form:label>
 										<form:select path="analysis" class="form-control">
 											<form:option value="views_over_time">Views over time analysis</form:option>
-											<form:option value="top_videos">Top videos analysis</form:option>
-											<form:option value="top_videos_plot">Top videos with plot analysis</form:option>
+											<form:option value="top_videos_10">Top 10 videos analysis</form:option>
+											<form:option value="top_videos_all">All videos analysis</form:option>
 										</form:select>
 
 									</div>

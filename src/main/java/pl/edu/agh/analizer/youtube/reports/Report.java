@@ -137,6 +137,7 @@ public class Report {
 		return columnHeaders;
 	}
 	
+	
 	public List<String> getChartLabels(){
 
 		System.out.println(labels);
@@ -146,6 +147,26 @@ public class Report {
 	public List<Integer> getChartData(){
 
 		return valuesList;
+	}
+	
+	public Map<String,Integer> getViewsList(){
+		Map <String,Integer> mock = new HashMap<String, Integer>();
+		mock.put("super video",new Integer(121212));
+		return mock;
+	}
+	
+	public Map<String,Integer> getTopViewsListDaily(){
+		return new HashMap<String,Integer>();
+	}
+	
+	public Map<String,Integer> getTopViewsListWeekly(){
+		Map <String,Integer> mock = new HashMap<String, Integer>();
+		mock.put("super video na ten tydzien",new Integer(121212));
+		return mock;
+	}
+	
+	public String getType(){
+		return reportType;
 	}
 	
 }

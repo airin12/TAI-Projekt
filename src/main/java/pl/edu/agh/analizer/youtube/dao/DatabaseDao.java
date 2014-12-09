@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -240,7 +239,7 @@ public class DatabaseDao {
 		}
 
 		//TODO trzeba wstawic typ raportu do bazy i w tym miejscu wstawic go zamiast pustego stringa
-		return new Report(columnNames, values, reportName,"");
+		return new Report(columnNames, values, reportName,"views_over_time");
 	}
 	
 	private static long executeInsertQueryAndGetID(String query, int idIndex) {
@@ -412,7 +411,7 @@ public class DatabaseDao {
 		}
 		
 		System.out.println(map);
-		Report report = new Report(Lists.newArrayList("VALUE_HEADER", "DATE"), map, "PLOOT",ReportHelper.TOP_VIDEOS);
+		Report report = new Report(Lists.newArrayList("VALUE_HEADER", "DATE"), map, "PLOOT",ReportHelper.TOP_VIDEOS_ALL);
 		addReport(report, "marcin");
 
 		Report ret = getReport("PLOOT");

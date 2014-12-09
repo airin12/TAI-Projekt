@@ -90,7 +90,8 @@ public class Report {
 	public static Report ofResultTable(ResultTable table, String title) throws IllegalArgumentException{
 		
 		if (table.getRows() == null || table.getRows().isEmpty()) {
-			throw new IllegalArgumentException("No results found.");
+			//throw new IllegalArgumentException("No results found.");
+			return EMPTY;
 		}
 		
 		ArrayList<String> headers = new ArrayList<String>();

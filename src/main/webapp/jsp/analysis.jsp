@@ -62,7 +62,6 @@
 	</div>
 
 
-
 	<script>
 		var labels =<c:out value="${labels}"/>
 		var data =<c:out value="${data}"/>

@@ -82,7 +82,8 @@ public class LoginController {
 
 		if (rs != null) {
 			youtubeReport = Report.ofResultTable(rs, report.getTitle());
-			DatabaseDao.addReport(youtubeReport, user.getName());
+			if(!youtubeReport.getTitle().equals("EMPTY"))
+				DatabaseDao.addReport(youtubeReport, user.getName());
 		}
 
 		redirectAttributes.addFlashAttribute("status", "success");

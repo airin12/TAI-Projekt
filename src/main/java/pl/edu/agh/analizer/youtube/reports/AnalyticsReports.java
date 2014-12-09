@@ -34,7 +34,7 @@ public class AnalyticsReports {
 			"https://www.googleapis.com/auth/yt-analytics.readonly",
 	        "https://www.googleapis.com/auth/youtube.readonly");
 	
-	private final static String APPLICATION_NAME = "youtube-analytics-api-report-tai";
+	private final static String APPLICATION_NAME = "youtube.analizer";
 	
 	public AnalyticsReports() {
 		

@@ -411,7 +411,7 @@ public class DatabaseDao {
 		
 		System.out.println(map);
 		Report report = new Report(Lists.newArrayList("VALUE_HEADER", "DATE"), map, "PLOOT");
-		addReport(report, "palys");
+		addReport(report, "marcin");
 
 		Report ret = getReport("PLOOT");
 

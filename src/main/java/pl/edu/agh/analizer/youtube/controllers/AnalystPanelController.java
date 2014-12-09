@@ -54,7 +54,12 @@ public class AnalystPanelController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		} else if (report.getAnalysis().equals(ReportHelper.TOP_VIDEOS_PLOT)) {
+			try {
+				rs = analyticsReport.executeTopVideosQuery(report.getChannelId(), report.getAnalysisStartDate(), report.getAnalysisEndDate());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 		if (rs != null) {
 			youtubeReport = Report.ofResultTable(rs, report.getTitle());

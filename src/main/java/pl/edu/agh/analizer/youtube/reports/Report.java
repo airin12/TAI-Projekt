@@ -1,6 +1,5 @@
 package pl.edu.agh.analizer.youtube.reports;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,11 +34,14 @@ public class Report {
 	
 	private final String VALUE_HEADER = "VALUE_HEADER";
 	
-	public Report(List<String> columnHeaders, Map<String, List<Long>> values, String title) {
+	private final String reportType;
+	
+	public Report(List<String> columnHeaders, Map<String, List<Long>> values, String title, String type) {
 		System.out.println(columnHeaders);
 		System.out.println(title);
 		System.out.println(values);
 		
+		this.reportType=type;
 		this.columnHeaders = new ArrayList<String>(columnHeaders);
 		this.values = new HashMap<String, List<Long>>(values);
 		this.title = title;
@@ -85,9 +87,10 @@ public class Report {
 		this.valuesList = Collections.EMPTY_LIST;
 		this.rowCount = 0;
 		this.title = "EMPTY";
+		this.reportType = null;
 	}
 	
-	public static Report ofResultTable(ResultTable table, String title) throws IllegalArgumentException{
+	public static Report ofResultTable(ResultTable table, String title, String type) throws IllegalArgumentException{
 		
 		if (table.getRows() == null || table.getRows().isEmpty()) {
 			//throw new IllegalArgumentException("No results found.");
@@ -111,7 +114,7 @@ public class Report {
 			}
 		}
 		
-		return new Report(headers, values, title);
+		return new Report(headers, values, title,type);
 	}
 	
 	public static Report empty() {

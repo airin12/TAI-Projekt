@@ -7,11 +7,28 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<style type="text/css">
+.bs-example {
+	margin: 20px;
+}
+</style>
 </head>
 
 <body>
 
 	<script>
+		window.onload = function() {
+			var radioWeek = document.getElementById("optradioWeek");
+			radioWeek.onclick = function() {
+				window.location.href = "${pageContext.request.contextPath}/user/top_videos_10?time=week";
+			};
+
+			var radioDay = document.getElementById("optradioDay");
+			radioDay.onclick = function() {
+				window.location.href = "${pageContext.request.contextPath}/user/top_videos_10?time=day";
+			};
+		};
+
 		function formSubmit() {
 			document.getElementById("logoutForm").submit();
 		}
@@ -27,7 +44,7 @@
 		</div>
 	</div>
 
-	<h2>Youtube Analizer User Panel</h2>
+	<h2>Top 10 videos analysis</h2>
 
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
 
@@ -54,7 +71,7 @@
 		<div class="col-xs-9">
 			<div class="panel panel-default">
 				<div class="panel-heading">${title}</div>
-								<table class="table table-hover">
+				<table class="table table-hover">
 					<col width="85%">
 					<col width="15%">
 					<tr>
@@ -71,7 +88,17 @@
 					</c:forEach>
 
 				</table>
-
+				<div class="bs-example">
+					<p>Time</p>
+					<form>
+						<div class="radio">
+							<label><input type="radio" name="optradio" id="optradioWeek">Last week</label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio" id="optradioDay">Last day</label>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

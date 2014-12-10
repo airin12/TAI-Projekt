@@ -27,7 +27,7 @@
 		</div>
 	</div>
 
-	<h2>Youtube Analizer User Panel</h2>
+	<h2>All videos analysis</h2>
 
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
 

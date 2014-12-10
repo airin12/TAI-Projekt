@@ -169,12 +169,18 @@ public class Report {
 	}
 	
 	public Map<String,Integer> getTopViewsListDaily(){
-		return new HashMap<String,Integer>();
+		Map <String,Integer> mock = new HashMap<String, Integer>();
+		mock.put("super video na ten tydzien",new Integer(12));
+		mock.put("inne video na ten tydzien",new Integer(12312));
+		mock.put("hit",new Integer(12121));
+		return mock;
 	}
 	
 	public Map<String,Integer> getTopViewsListWeekly(){
 		Map <String,Integer> mock = new HashMap<String, Integer>();
 		mock.put("super video na ten tydzien",new Integer(121212));
+		mock.put("inne video na ten tydzien",new Integer(12212));
+		mock.put("hit",new Integer(1212122));
 		return mock;
 	}
 	

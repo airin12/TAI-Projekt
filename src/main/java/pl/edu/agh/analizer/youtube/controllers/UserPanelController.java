@@ -41,20 +41,31 @@ public class UserPanelController {
 			modelAndView.addObject("labels", report.getChartLabelsFromWeek());
 			modelAndView.addObject("data", report.getChartDataFromWeek());
 		} else if (type.equals(ReportHelper.TOP_VIDEOS_10)) {
-			modelAndView.addObject("videos", report.getTopViewsListWeekly());
+			modelAndView.addObject("videos", SortingUtil.entriesSortedByValues(report.getTopViewsListWeekly()));
 		} else if (type.equals(ReportHelper.TOP_VIDEOS_ALL)) {
 			modelAndView.addObject("videos", SortingUtil.entriesSortedByValues(report.getViewsList()));
 		}
 	}
 
 	@RequestMapping(value = "/views_over_time", method = RequestMethod.GET)
-	public ModelAndView showAnalysis(@RequestParam(value = "time", required = true) String time, ModelAndView modelAndView) {
+	public ModelAndView showViewsAnalysis(@RequestParam(value = "time", required = true) String time, ModelAndView modelAndView) {
 		if (time.equals("week")) {
 			modelAndView.addObject("labels", report.getChartLabelsFromWeek());
 			modelAndView.addObject("data", report.getChartDataFromWeek());
 		} else if (time.equals("day")) {
 			modelAndView.addObject("labels", report.getChartLabelsFromDay());
 			modelAndView.addObject("data", report.getChartDataFromDay());
+		}
+		modelAndView.addObject("title", report.getTitle());
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/top_videos_10", method = RequestMethod.GET)
+	public ModelAndView showTopVideosAnalysis(@RequestParam(value = "time", required = true) String time, ModelAndView modelAndView) {
+		if (time.equals("week")) {
+			modelAndView.addObject("videos", SortingUtil.entriesSortedByValues(report.getTopViewsListWeekly()));
+		} else if (time.equals("day")) {
+			modelAndView.addObject("videos", SortingUtil.entriesSortedByValues(report.getTopViewsListDaily()));
 		}
 		modelAndView.addObject("title", report.getTitle());
 		return modelAndView;

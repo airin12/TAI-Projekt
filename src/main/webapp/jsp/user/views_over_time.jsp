@@ -45,7 +45,7 @@
 		</div>
 	</div>
 
-	<h2>Analysis</h2>
+	<h2>Views over time nalysis</h2>
 
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
 

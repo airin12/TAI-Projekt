@@ -27,7 +27,7 @@
 		</div>
 	</div>
 
-	<h2>All videos analysis</h2>
+	<h2>${title}</h2>
 
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
 
@@ -53,7 +53,7 @@
 		</div>
 		<div class="col-xs-9">
 			<div class="panel panel-default">
-				<div class="panel-heading">${title}</div>
+				<div class="panel-heading">Videos sorted by views</div>
 								<table class="table table-hover">
 					<col width="85%">
 					<col width="15%">

@@ -8,6 +8,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <script src="http://student.agh.edu.pl/~bogusz/lib/Chart.js"></script>
+<style type="text/css">
+.bs-example {
+	margin: 20px;
+}
+</style>
 </head>
 
 <body>
@@ -28,7 +33,7 @@
 		</div>
 	</div>
 
-	<h2>Youtube Analizer User Panel</h2>
+	<h2>Analysis</h2>
 
 	<c:url value="/j_spring_security_logout" var="logoutUrl" />
 
@@ -55,7 +60,9 @@
 		<div class="col-xs-9">
 			<div class="panel panel-default">
 				<div class="panel-heading">${title}</div>
-				<canvas id="analysis" width="1000" height="400"></canvas>
+				<div class="bs-example">
+					<canvas id="analysis" width="1000" height="400"></canvas>
+				</div>
 
 			</div>
 		</div>
@@ -63,8 +70,8 @@
 
 
 	<script>
-		var labels =<c:out value="${labels}"/>
-		var data =<c:out value="${data}"/>
+		var labels = <c:out value="${labels}"/>
+		var data = <c:out value="${data}"/>
 		var buyerData = {
 			labels : labels,
 			datasets : [ {
@@ -77,7 +84,7 @@
 		};
 
 		var buyers = document.getElementById('analysis').getContext('2d');
-		new Chart(buyers).Line(buyerData);
+		new Chart(buyers).Bar(buyerData);
 	</script>
 
 

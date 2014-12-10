@@ -95,22 +95,37 @@
 									<div class="form-group">
 										<form:label path="title">Title</form:label>
 										<form:input path="title" class="form-control" placeholder="Insert title" />
+										<c:if test="${not empty titleError}">
+											<div class="alert alert-danger alert-error">${titleError}</div>
+										</c:if>
 
 										<form:label path="channelId">Channel Id</form:label>
 										<form:input path="channelId" class="form-control" placeholder="Insert channel id" />
+										<c:if test="${not empty channelIdError}">
+											<div class="alert alert-danger alert-error">${channelIdError}</div>
+										</c:if>
 
 										<form:label path="analysisStartDate">Start date</form:label>
 										<form:input path="analysisStartDate" class="form-control" placeholder="Insert start date" />
+										<c:if test="${not empty analysisStartDateError}">
+											<div class="alert alert-danger alert-error">${analysisStartDateError}</div>
+										</c:if>
 
 										<form:label path="analysisEndDate">End date</form:label>
 										<form:input path="analysisEndDate" class="form-control" placeholder="Insert end date" />
+										<c:if test="${not empty analysisEndDateError}">
+											<div class="alert alert-danger alert-error">${analysisEndDateError}</div>
+										</c:if>
 
-										<form:label path="analysisEndDate">Analysis type</form:label>
+										<form:label path="analysis">Analysis type</form:label>
 										<form:select path="analysis" class="form-control">
 											<form:option value="views_over_time">Views over time analysis</form:option>
 											<form:option value="top_videos_10">Top 10 videos analysis</form:option>
 											<form:option value="top_videos_all">All videos analysis</form:option>
 										</form:select>
+										<c:if test="${not empty analysisError}">
+											<div class="alert alert-danger alert-error">${analysisError}</div>
+										</c:if>
 
 									</div>
 									<button type="submit" class="btn btn-default">Save</button>

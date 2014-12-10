@@ -163,6 +163,8 @@ public class Report {
 	public Map<String,Integer> getViewsList(){
 		Map <String,Integer> mock = new HashMap<String, Integer>();
 		mock.put("super video",new Integer(121212));
+		mock.put("super zw",new Integer(121));
+		mock.put("best",new Integer(555212));
 		return mock;
 	}
 	

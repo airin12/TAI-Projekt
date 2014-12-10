@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.edu.agh.analizer.youtube.dao.DatabaseDao;
 import pl.edu.agh.analizer.youtube.reports.Report;
 import pl.edu.agh.analizer.youtube.reports.ReportHelper;
+import pl.edu.agh.analizer.youtube.util.SortingUtil;
 
 @Controller
 @RequestMapping("user")
@@ -42,20 +43,21 @@ public class UserPanelController {
 		} else if (type.equals(ReportHelper.TOP_VIDEOS_10)) {
 			modelAndView.addObject("videos", report.getTopViewsListWeekly());
 		} else if (type.equals(ReportHelper.TOP_VIDEOS_ALL)) {
-			modelAndView.addObject("videos", report.getViewsList());
+			modelAndView.addObject("videos", SortingUtil.entriesSortedByValues(report.getViewsList()));
 		}
 	}
 
 	@RequestMapping(value = "/views_over_time", method = RequestMethod.GET)
 	public ModelAndView showAnalysis(@RequestParam(value = "time", required = true) String time, ModelAndView modelAndView) {
-		if(time.equals("week")){
+		if (time.equals("week")) {
 			modelAndView.addObject("labels", report.getChartLabelsFromWeek());
 			modelAndView.addObject("data", report.getChartDataFromWeek());
-		} else if(time.equals("day")){
+		} else if (time.equals("day")) {
 			modelAndView.addObject("labels", report.getChartLabelsFromDay());
 			modelAndView.addObject("data", report.getChartDataFromDay());
 		}
-		modelAndView.addObject("title",report.getTitle());
+		modelAndView.addObject("title", report.getTitle());
 		return modelAndView;
 	}
+
 }

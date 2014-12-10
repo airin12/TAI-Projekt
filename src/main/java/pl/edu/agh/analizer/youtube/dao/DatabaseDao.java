@@ -239,7 +239,7 @@ public class DatabaseDao {
 		}
 
 		//TODO trzeba wstawic typ raportu do bazy i w tym miejscu wstawic go zamiast pustego stringa
-		return new Report(columnNames, values, reportName,"views_over_time");
+		return new Report(columnNames, values, reportName,"top_videos_all");
 	}
 	
 	private static long executeInsertQueryAndGetID(String query, int idIndex) {

@@ -152,12 +152,12 @@ public class Report {
 	public List<String> getChartLabelsFromDay(){
 
 		System.out.println(labels);
-		return labels;
+		return labels.subList(0, 1);
 	}
 
 	public List<Integer> getChartDataFromDay(){
 
-		return valuesList;
+		return valuesList.subList(0, 1);
 	}
 	
 	public Map<String,Integer> getViewsList(){

@@ -18,6 +18,18 @@
 <body>
 
 	<script>
+		window.onload = function() {
+			var radioWeek = document.getElementById("optradioWeek");
+			radioWeek.onclick = function() {
+				window.location.href = "${pageContext.request.contextPath}/user/views_over_time?time=week";
+			};
+
+			var radioDay = document.getElementById("optradioDay");
+			radioDay.onclick = function() {
+				window.location.href = "${pageContext.request.contextPath}/user/views_over_time?time=day";
+			};
+		};
+
 		function formSubmit() {
 			document.getElementById("logoutForm").submit();
 		}
@@ -63,12 +75,15 @@
 				<div class="bs-example">
 					<canvas id="analysis" width="1000" height="400"></canvas>
 					<p>Time</p>
-					<div class="radio">
-						<label><input type="radio" name="optradio">Last week</label>
-					</div>
-					<div class="radio">
-						<label><input type="radio" name="optradio">Last day</label>
-					</div>
+					<form>
+						<div class="radio">
+							<label><input type="radio" name="optradio" id="optradioWeek">Last week</label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio" id="optradioDay">Last day</label>
+						</div>
+					</form>
+
 				</div>
 			</div>
 		</div>

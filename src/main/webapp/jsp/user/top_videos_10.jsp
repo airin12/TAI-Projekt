@@ -88,8 +88,9 @@
 					</c:forEach>
 
 				</table>
+				<div class="panel-heading">Time</div>
 				<div class="bs-example">
-					<p>Time</p>
+
 					<form>
 						<div class="radio">
 							<label><input type="radio" name="optradio" id="optradioWeek">Last week</label>
@@ -98,6 +99,7 @@
 							<label><input type="radio" name="optradio" id="optradioDay">Last day</label>
 						</div>
 					</form>
+
 				</div>
 			</div>
 		</div>

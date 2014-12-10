@@ -8,12 +8,12 @@
 
  	<!-- enable use-expressions -->
 	<security:http auto-config="true" use-expressions="true">
- 		
+ 		<!-- access denied page -->
+		<security:access-denied-handler error-page="/error/403" />
  		<security:intercept-url pattern="/user/*" access="hasRole('ROLE_USER')"/>
  		<security:intercept-url pattern="/analyst/*" access="hasRole('ROLE_ANALYST')"/>
  		
-		<!-- access denied page -->
-		<security:access-denied-handler error-page="/error/403" />
+		
  
 		<security:form-login 
 		    login-page="/login" 

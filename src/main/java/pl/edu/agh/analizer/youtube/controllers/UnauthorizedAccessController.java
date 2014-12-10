@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("error")
 public class UnauthorizedAccessController {
 
-	@RequestMapping(value = "/403", method = RequestMethod.POST)
+	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public ModelAndView accesssDenied(Principal user) {
 
 		ModelAndView model = new ModelAndView();
@@ -22,7 +22,7 @@ public class UnauthorizedAccessController {
 			model.addObject("msg", "You do not have permission to access this page!");
 		}
 
-		model.setViewName("403");
+		model.setViewName("error/403");
 		return model;
 
 	}

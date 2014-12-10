@@ -74,7 +74,10 @@
 				<div class="panel-heading">Chart</div>
 				<div class="bs-example">
 					<canvas id="analysis" width="1000" height="400"></canvas>
-					<p>Time</p>
+				</div>
+				<div class="panel-heading">Time</div>
+				<div class="bs-example">
+
 					<form>
 						<div class="radio">
 							<label><input type="radio" name="optradio" id="optradioWeek">Last week</label>
@@ -94,13 +97,14 @@
 		var rawLabels = <c:out value="${labels}"/>
 		var data = <c:out value="${data}"/>
 		var labels = [];
-		
-		for(var i=0; i<rawLabels.length; i++){
+
+		for (var i = 0; i < rawLabels.length; i++) {
 			var date = new Date(rawLabels[i]);
-			var label = date.getDay()+"-"+date.getMonth()+"-"+date.getFullYear();
+			var label = date.getDay() + "-" + date.getMonth() + "-"
+					+ date.getFullYear();
 			labels.push(label);
 		}
-		
+
 		var buyerData = {
 			labels : labels,
 			datasets : [ {

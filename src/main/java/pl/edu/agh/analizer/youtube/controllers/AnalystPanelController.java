@@ -26,6 +26,13 @@ public class AnalystPanelController {
 
 	private List<String> userAnalysisList = null;
 
+	/**
+	 * Method that intercepts HTTP GET requests to /analyst/panel. Fills model with necessary objects.
+	 * 
+	 * @param modelAndView object that represents corresponding jsp page
+	 * @param user logged in user data
+	 * @return modelAndView object with necessary objects in model map
+	 */
 	@RequestMapping(value = "/panel", method = RequestMethod.GET)
 	public ModelAndView showAnalystPanel(ModelAndView modelAndView, Principal user) {
 		userAnalysisList = DatabaseDao.getUsersReportsNames(user.getName());
@@ -34,6 +41,15 @@ public class AnalystPanelController {
 		return modelAndView;
 	}
 
+	/**
+	 * Method that intercepts HTTP POST requests to analyst/panel.
+	 * Adds new analysis to database and performs redirect to analyst/panel.
+	 * 
+	 * @param report report object filled with values from corresponding jsp form.
+	 * @param redirectAttributes redirect attributes
+	 * @param user logged in user data
+	 * @return redirect view object (to analyst/panel)
+	 */
 	@RequestMapping(value = "/panel", method = RequestMethod.POST)
 	public View addanalysis(ReportHelper report, RedirectAttributes redirectAttributes, Principal user) {
 		ResultTable rs = null;
@@ -73,6 +89,14 @@ public class AnalystPanelController {
 		return new RedirectView("/analyst/panel", true);
 	}
 	
+	/**Method that intercepts HTTP GET requests to analyst/remove.
+	 * Deletes chosen analysis.
+	 * 
+	 * @param title title of analysis
+	 * @param modelAndView object that represents corresponding jsp page
+	 * @param user logged in user data
+	 * @return new modelAndView object that with updated data
+	 */
 	@RequestMapping(value = "/remove", method = RequestMethod.GET)
 	public ModelAndView removeAnalysis(@RequestParam(value = "title", required = true) String title, ModelAndView modelAndView, Principal user) {
 		if(DatabaseDao.removeRaport(title))

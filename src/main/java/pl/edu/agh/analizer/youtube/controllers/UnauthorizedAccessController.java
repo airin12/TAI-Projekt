@@ -11,6 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("error")
 public class UnauthorizedAccessController {
 
+	/**
+	 * Method that intercepts HTTP GET to error/403. Renders custom 403 error page.
+	 * 
+	 * @param user logged in user data
+	 * @return modelAndView objects with filled model map
+	 */
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public ModelAndView accesssDenied(Principal user) {
 

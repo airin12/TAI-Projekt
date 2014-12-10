@@ -10,6 +10,15 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("login")
 public class LoginController {
 
+	/**
+	 * Method that intercepts HTTP GET requests to /login.
+	 * Renders login page.
+	 * 
+	 * @param error login error message (optional)
+	 * @param logout logout message (optional)
+	 * @param modelAndView object that represents corresponding jsp page
+	 * @return modelAndView object with filled model map
+	 */
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView prepareLoginPage(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout,
 			ModelAndView modelAndView) {

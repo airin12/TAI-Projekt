@@ -20,13 +20,26 @@ public class UserPanelController {
 	private List<String> analysisList = null;
 	private Report report = null;
 
+	/**
+	 * Method that intercepts HTTP GET requests to user/panel.
+	 * 
+	 * @param modelAndView object that represents corresponding jsp page
+	 * @return modelAndView object with filled model map
+	 */
 	@RequestMapping(value = "/panel", method = RequestMethod.GET)
-	public ModelAndView logIn(ModelAndView modelAndView) {
+	public ModelAndView showUserPanel(ModelAndView modelAndView) {
 		analysisList = DatabaseDao.getReportsNames();
 		modelAndView.addObject("analysis", analysisList);
 		return modelAndView;
 	}
 
+	/**
+	 * Method that intercepts HTTP GET requests to user/analysis.
+	 * Performs a dispatching to proper jsp page based on analysis type.
+	 * 
+	 * @param title analysis title
+	 * @return object representing jsp page corresponding to analysis type
+	 */
 	@RequestMapping(value = "/analysis", method = RequestMethod.GET)
 	public ModelAndView getAnalysisPage(@RequestParam(value = "title", required = true) String title) {
 		report = DatabaseDao.getReport(title);
@@ -47,6 +60,14 @@ public class UserPanelController {
 		}
 	}
 
+	/**
+	 * Method that intercepts HTTP GET requests to user/views_over_time.
+	 * Method loads data into model depend on users time choice.
+	 * 
+	 * @param time time range 
+	 * @param modelAndView object that represents corresponding jsp page
+	 * @return modelAndViem object with filled model map
+	 */
 	@RequestMapping(value = "/views_over_time", method = RequestMethod.GET)
 	public ModelAndView showViewsAnalysis(@RequestParam(value = "time", required = true) String time, ModelAndView modelAndView) {
 		if (time.equals("week")) {
@@ -60,6 +81,14 @@ public class UserPanelController {
 		return modelAndView;
 	}
 
+	/**
+	 * Method that intercepts HTTP GET requests to user/top_videos_10.
+	 * Method loads data into model depend on users time choice.
+	 * 
+	 * @param time time range 
+	 * @param modelAndView object that represents corresponding jsp page
+	 * @return modelAndViem object with filled model map
+	 */
 	@RequestMapping(value = "/top_videos_10", method = RequestMethod.GET)
 	public ModelAndView showTopVideosAnalysis(@RequestParam(value = "time", required = true) String time, ModelAndView modelAndView) {
 		if (time.equals("week")) {

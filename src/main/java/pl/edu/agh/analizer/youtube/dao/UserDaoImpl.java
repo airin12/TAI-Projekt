@@ -21,12 +21,12 @@ public class UserDaoImpl implements UserDao {
 	public UserDaoImpl() {
 
 		super();
-		DataSource dataSource = transactionManager.getDataSource();
-		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	
 	public void setTransactionManager(DataSourceTransactionManager transactionManager) {
 		this.transactionManager = transactionManager;
+		DataSource dataSource = transactionManager.getDataSource();
+		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
 	@Override

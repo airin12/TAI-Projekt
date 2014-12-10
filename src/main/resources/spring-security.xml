@@ -9,8 +9,8 @@
  	<!-- enable use-expressions -->
 	<security:http auto-config="true" use-expressions="true">
  		
- 		<security:intercept-url pattern="/user*" access="hasRole('ROLE_USER')"/>
- 		<security:intercept-url pattern="/analyst*" access="hasRole('ROLE_ANALYST')"/>
+ 		<security:intercept-url pattern="/user/*" access="hasRole('ROLE_USER')"/>
+ 		<security:intercept-url pattern="/analyst/*" access="hasRole('ROLE_ANALYST')"/>
  		
 		<!-- access denied page -->
 		<security:access-denied-handler error-page="/error/403" />

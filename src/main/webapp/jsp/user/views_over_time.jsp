@@ -62,8 +62,14 @@
 				<div class="panel-heading">${title}</div>
 				<div class="bs-example">
 					<canvas id="analysis" width="1000" height="400"></canvas>
+					<p>Time</p>
+					<div class="radio">
+						<label><input type="radio" name="optradio">Last week</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" name="optradio">Last day</label>
+					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>

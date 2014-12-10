@@ -138,13 +138,24 @@ public class Report {
 	}
 	
 	
-	public List<String> getChartLabels(){
+	public List<String> getChartLabelsFromWeek(){
 
 		System.out.println(labels);
 		return labels;
 	}
 
-	public List<Integer> getChartData(){
+	public List<Integer> getChartDataFromWeek(){
+
+		return valuesList;
+	}
+	
+	public List<String> getChartLabelsFromDay(){
+
+		System.out.println(labels);
+		return labels;
+	}
+
+	public List<Integer> getChartDataFromDay(){
 
 		return valuesList;
 	}

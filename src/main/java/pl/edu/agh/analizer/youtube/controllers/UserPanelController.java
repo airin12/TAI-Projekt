@@ -37,8 +37,8 @@ public class UserPanelController {
 
 	private void setModelObjects(ModelAndView modelAndView, String type) {
 		if (type.equals(ReportHelper.VIEWS_OVER_TIME)) {
-			modelAndView.addObject("labels",report.getChartLabels());
-			modelAndView.addObject("data",report.getChartData());
+			modelAndView.addObject("labels",report.getChartLabelsFromWeek());
+			modelAndView.addObject("data",report.getChartDataFromWeek());
 		} else if (type.equals(ReportHelper.TOP_VIDEOS_10)) {
 			modelAndView.addObject("videos",report.getTopViewsListWeekly());			
 		} else if (type.equals(ReportHelper.TOP_VIDEOS_ALL)) {

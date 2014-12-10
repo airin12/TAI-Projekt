@@ -4,14 +4,15 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import pl.edu.agh.analizer.youtube.dao.DatabaseDao;
 import pl.edu.agh.analizer.youtube.reports.AnalyticsReports;
@@ -46,17 +47,26 @@ public class AnalystPanelController {
 	 * Adds new analysis to database and performs redirect to analyst/panel.
 	 * 
 	 * @param report report object filled with values from corresponding jsp form.
-	 * @param redirectAttributes redirect attributes
+	 * @param bindingResult result of validation on report object
 	 * @param user logged in user data
-	 * @return redirect view object (to analyst/panel)
+	 * @return redirect new modelAndView object with updated data
 	 */
 	@RequestMapping(value = "/panel", method = RequestMethod.POST)
-	public View addanalysis(ReportHelper report, RedirectAttributes redirectAttributes, Principal user) {
+	public ModelAndView addanalysis(@Valid ReportHelper report, BindingResult bindingResult, Principal user) {
+        if (bindingResult.hasErrors()) {
+        	ModelAndView modelAndView = new ModelAndView("analyst/panel");
+        	modelAndView.addObject("analysis", userAnalysisList);
+    		modelAndView.getModel().put("report", report);
+    		
+    		for(FieldError error : bindingResult.getFieldErrors())
+        		modelAndView.addObject(error.getField()+"Error",error.getDefaultMessage());
+
+    		return modelAndView;
+        }
+        
 		ResultTable rs = null;
 		AnalyticsReports analyticsReport = new AnalyticsReports();
 		Report youtubeReport;
-		System.out.println(report);
-		System.out.println(user.getName());
 
 		if (report.getAnalysis().equals(ReportHelper.VIEWS_OVER_TIME)) {
 			try {
@@ -84,9 +94,7 @@ public class AnalystPanelController {
 				DatabaseDao.addReport(youtubeReport, user.getName());
 		}
 
-		redirectAttributes.addFlashAttribute("status", "success");
-
-		return new RedirectView("/analyst/panel", true);
+		return new ModelAndView("analyst/panel");
 	}
 	
 	/**Method that intercepts HTTP GET requests to analyst/remove.

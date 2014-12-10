@@ -1,10 +1,26 @@
 package pl.edu.agh.analizer.youtube.reports;
 
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class ReportHelper {
+	
+	@NotEmpty
 	private String title;
+	
+	@NotEmpty
 	private String channelId;
+	
+	@NotEmpty
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private String analysisStartDate;
+	
+	@NotEmpty
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private String analysisEndDate;
+	
+	@NotEmpty
 	private String analysis;
 	
 	public static final String VIEWS_OVER_TIME = "views_over_time";

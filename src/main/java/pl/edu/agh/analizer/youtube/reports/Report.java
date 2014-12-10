@@ -24,7 +24,7 @@ public class Report {
 	
 	private final int rowCount;
 	
-	private final List<String> labels;
+	private final List<Long> labels;
 	
 	private final List<Integer> valuesList;
 	
@@ -62,20 +62,20 @@ public class Report {
 			throw new RuntimeException("Report does not contain values");
 		}
 		
-		labels = new LinkedList<String>();
+		labels = new LinkedList<Long>();
 		if (values.containsKey(DATE_HEADER)) {
 			//SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
 			SimpleDateFormat format = new SimpleDateFormat("mm");
 			for (Long l : values.get(DATE_HEADER)) {
-				labels.add(format.format(new Date(l)));
+				labels.add(l);  //-- pomysl zeby wrzucac longa z data
 			}
 		} else if (values.containsKey(RAW_HEADER)) {
 			for (Long l : values.get(RAW_HEADER)) {
-				labels.add(l.toString());
+				labels.add(l); //-- pomysl zeby wrzucac longa z data
 			}
 		} else {
 			for (int i = 0; i < rowCount; i++) {
-				labels.add(Integer.toString(i));
+				labels.add(new Long(i));
 			}
 		}
 	}
@@ -138,7 +138,7 @@ public class Report {
 	}
 	
 	
-	public List<String> getChartLabelsFromWeek(){
+	public List<Long> getChartLabelsFromWeek(){
 
 		System.out.println(labels);
 		return labels;
@@ -149,7 +149,7 @@ public class Report {
 		return valuesList;
 	}
 	
-	public List<String> getChartLabelsFromDay(){
+	public List<Long> getChartLabelsFromDay(){
 
 		System.out.println(labels);
 		return labels.subList(0, 1);

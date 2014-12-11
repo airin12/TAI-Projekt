@@ -136,29 +136,34 @@ public class Report {
 		return columnHeaders;
 	}
 	
-	
+	//TODO labelki do wykresu z ostatniego tygodnia, data jako long
 	public List<Long> getChartLabelsFromWeek(){
 
 		System.out.println(labels);
 		return labels;
 	}
 
+	//TODO dane do wykresu z ostatniego tygodnia
 	public List<Integer> getChartDataFromWeek(){
 
 		return valuesList;
 	}
 	
+	//TODO labelki do wykresu z ostatniego dnia, data jako long
 	public List<Long> getChartLabelsFromDay(){
 
 		System.out.println(labels);
 		return labels.subList(0, 1);
 	}
 
+	//TODO dane do wykresu z ostatniego dnia
 	public List<Integer> getChartDataFromDay(){
 
 		return valuesList.subList(0, 1);
 	}
 	
+	//TODO pobranie listy wszystkich filmow, mapa <nazwa,wyswietlenia>, sortowanie jest w kontrolerze
+	// tutaj nie ma rozroznienia na okresy czasowe dlatego jedna metoda
 	public Map<String,Integer> getViewsList(){
 		Map <String,Integer> mock = new HashMap<String, Integer>();
 		mock.put("super video",new Integer(121212));
@@ -167,6 +172,8 @@ public class Report {
 		return mock;
 	}
 	
+	//TODO pobranie listy wyswietlen dla 10 najlepszych filmow, mapa<nazwa, wyswietlenia>
+	// pobranie dla ostatniego dnia
 	public Map<String,Integer> getTopViewsListDaily(){
 		Map <String,Integer> mock = new HashMap<String, Integer>();
 		mock.put("super video na ten tydzien",new Integer(12));
@@ -175,6 +182,8 @@ public class Report {
 		return mock;
 	}
 	
+	//TODO pobranie listy wyswietlen dla 10 najlepszych filmow, mapa<nazwa, wyswietlenia>
+		// pobranie dla ostatniego tygodnia
 	public Map<String,Integer> getTopViewsListWeekly(){
 		Map <String,Integer> mock = new HashMap<String, Integer>();
 		mock.put("super video na ten tydzien",new Integer(121212));

@@ -12,7 +12,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.asm.Type;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowCallbackHandler;
@@ -59,7 +58,7 @@ public class ReportDaoImpl implements ReportDao {
 	@Override
 	public List<String> selectUsersReportsNames(String username) {
 
-		String sql = "SALECT TITLE FROM ANALYSIS WHERE USERNAME = ?";
+		String sql = "SELECT TITLE FROM ANALYSIS WHERE USERNAME = ?";
 		final Object[] params = new Object[]{username};
 		final List<String> names = new LinkedList<String>();
 		
@@ -121,8 +120,19 @@ public class ReportDaoImpl implements ReportDao {
 
 			}
 		});
+		
+		final LinkedList<String> reportType = new LinkedList<String>();
+		sql = "SELECT ANALYSIS_TYPE FROM ANALYSIS WHERE TITLE = ?";
+		jdbcTemplate.query(sql,  params, new RowCallbackHandler() {
+			
+			@Override
+			public void processRow(ResultSet rs) throws SQLException {
+				
+				reportType.add(rs.getString("ANALYSIS_TYPE"));
+			}
+		});
 
-		return new Report(columnNames, values, reportName,"views_over_time");
+		return new Report(columnNames, values, reportName, reportType.getFirst());
 	}
 
 	@Override
@@ -151,8 +161,8 @@ public class ReportDaoImpl implements ReportDao {
 	
 	private long insertAnalysisAndGetId(Report report, String username) {
 		
-		final String sql = "INSERT INTO ANALYSIS(TITLE, USERNAME) VALUES(?,?)";
-		final String[] params = new String[]{report.getTitle(), username};
+		final String sql = "INSERT INTO ANALYSIS(TITLE, USERNAME, ANALYSIS_TYPE) VALUES(?,?,?)";
+		final String[] params = new String[]{report.getTitle(), username, report.getType()};
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		
 		jdbcTemplate.update(new PreparedStatementCreator() {

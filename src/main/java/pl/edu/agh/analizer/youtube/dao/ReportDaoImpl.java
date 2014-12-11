@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -132,7 +133,11 @@ public class ReportDaoImpl implements ReportDao {
 			}
 		});
 
-		return new Report(columnNames, values, reportName, reportType.getFirst());
+		if (reportType.size() > 0) {
+			return new Report(columnNames, values, reportName, reportType.getFirst());
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -171,14 +176,15 @@ public class ReportDaoImpl implements ReportDao {
 			public PreparedStatement createPreparedStatement(Connection connection)
 					throws SQLException {
 				
-				PreparedStatement ps = connection.prepareStatement(sql, new String[]{"ID"});
+				PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, params[0]);
 				ps.setString(2, params[1]);
+				ps.setString(3, params[2]);
 				return ps;
 			}
 		}, keyHolder);
 		
-		return keyHolder.getKey().longValue();
+		return ((Number)keyHolder.getKeys().get("id")).longValue();
 	}
 
 	@Override
@@ -223,14 +229,14 @@ public class ReportDaoImpl implements ReportDao {
 				public PreparedStatement createPreparedStatement(Connection connection)
 						throws SQLException {
 
-					PreparedStatement ps = connection.prepareStatement(sql, generatedIDPath);
+					PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 					ps.setLong(1, analysisID);
 					ps.setString(2, columnName);
 					return ps;
 				}
 			}, keyHolder);
 			
-			ids.put(columnName, keyHolder.getKey().longValue());
+			ids.put(columnName, ((Number)keyHolder.getKeys().get("id")).longValue());
 		}
 		
 		return ids;
@@ -252,14 +258,14 @@ public class ReportDaoImpl implements ReportDao {
 				public PreparedStatement createPreparedStatement(Connection connection)
 						throws SQLException {
 
-					PreparedStatement ps = connection.prepareStatement(sql, generatedIDPath);
+					PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 					ps.setLong(1, analysisID);
 					ps.setLong(2, index);
 					return ps;
 				}
 			}, keyHolder);
 			
-			ids.put((long) i, keyHolder.getKey().longValue());
+			ids.put((long) i, ((Number)keyHolder.getKeys().get("id")).longValue());
 		}
 		
 		return ids;

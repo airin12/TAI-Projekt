@@ -195,5 +195,52 @@ public class Report {
 	public String getType(){
 		return reportType;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((columnHeaders == null) ? 0 : columnHeaders.hashCode());
+		result = prime * result
+				+ ((reportType == null) ? 0 : reportType.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((values == null) ? 0 : values.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Report other = (Report) obj;
+		if (columnHeaders == null) {
+			if (other.columnHeaders != null)
+				return false;
+		} else if (!columnHeaders.equals(other.columnHeaders))
+			return false;
+		if (reportType == null) {
+			if (other.reportType != null)
+				return false;
+		} else if (!reportType.equals(other.reportType))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		if (values == null) {
+			if (other.values != null)
+				return false;
+		} else if (!values.equals(other.values))
+			return false;
+		return true;
+	}
+	
+	
 	
 }

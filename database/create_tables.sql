@@ -109,7 +109,6 @@ CREATE TABLE analysis_value
   value bigint,
   rowid serial NOT NULL,
   columnid serial NOT NULL,
-  string_value character varying(45),
   CONSTRAINT analysis_value_pkey PRIMARY KEY (id),
   CONSTRAINT analysis_value_column_id_fkey FOREIGN KEY (columnid)
       REFERENCES analysis_column (id) MATCH SIMPLE

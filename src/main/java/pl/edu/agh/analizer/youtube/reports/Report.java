@@ -39,12 +39,26 @@ public class Report {
 	private static String labelsHeader;
 	private static String valuesHeader;
 	
+	private static List<String> videosIds = new LinkedList<String>();
+	
+	private Report additionalReport;
+	
 	private final String reportType;
 	
 	public Report(List<String> columnHeaders, Map<String, List<Long>> values, String title, String type) {
 		System.out.println(columnHeaders);
 		System.out.println(title);
 		System.out.println(values);
+		
+		if(type.equals(ReportHelper.VIEWS_OVER_TIME)){
+			labelsHeader="day";
+			valuesHeader="views";
+		}
+		
+		if(type.equals(ReportHelper.TOP_VIDEOS_10) || type.equals(ReportHelper.TOP_VIDEOS_ALL)){
+			labelsHeader="videos";
+			valuesHeader="views";
+		}
 		
 		this.reportType=type;
 		this.columnHeaders = new ArrayList<String>(columnHeaders);
@@ -73,6 +87,9 @@ public class Report {
 				labels.add(l);  //-- pomysl zeby wrzucac longa z data
 			}
 		} 
+		
+		if(labelsHeader.equals("video"))
+			;
 	}
 	
 	private Report() {
@@ -94,6 +111,11 @@ public class Report {
 		
 		if(type.equals(ReportHelper.VIEWS_OVER_TIME)){
 			labelsHeader="day";
+			valuesHeader="views";
+		}
+		
+		if(type.equals(ReportHelper.TOP_VIDEOS_ALL)){
+			labelsHeader="videos";
 			valuesHeader="views";
 		}
 		
@@ -122,6 +144,8 @@ public class Report {
 						e.printStackTrace();
 					}
 					value = d.getTime();
+				}else if(headerName.equals("video")){
+					videosIds.add((String)row.get(i));
 				}else
 					value = ((BigDecimal) row.get(i)).longValue();
 				values.get(headerName).add(value);
@@ -156,8 +180,8 @@ public class Report {
 		int index = 0;
 		
 		for (int i = 0; i < rowCount; i++) {
-			if (values.get(DATE_HEADER).get(i) > greatest) {
-				greatest = values.get(DATE_HEADER).get(i);
+			if (values.get(labelsHeader).get(i) > greatest) {
+				greatest = values.get(labelsHeader).get(i);
 				index = i;
 			}
 		}
@@ -165,39 +189,34 @@ public class Report {
 		return index;
 	}
 	
-	//TODO labelki do wykresu z ostatniego tygodnia, data jako long
 	public List<Long> getChartLabelsFromWeek(){
 
 		System.out.println(labels);
 		return labels;
 	}
 
-	//TODO dane do wykresu z ostatniego tygodnia
 	public List<Integer> getChartDataFromWeek(){
 		return valuesList;
 	}
 	
-	//TODO labelki do wykresu z ostatniego dnia, data jako long
+
 	public List<Long> getChartLabelsFromDay(){
 		
-		if (!values.containsKey(DATE_HEADER)) {
+		if (!values.containsKey(labelsHeader)) {
 			throw new IllegalStateException("Report does not contain date column");
 		}
 		
-		return Collections.singletonList(values.get(DATE_HEADER).get(getIndexOfLastDay()));
+		return Collections.singletonList(values.get(labelsHeader).get(getIndexOfLastDay()));
 
-//		System.out.println(labels);
-//		return labels.subList(0, 1);
 	}
 
-	//TODO dane do wykresu z ostatniego dnia
 	public List<Integer> getChartDataFromDay(){
 
-		if (!values.containsKey(VALUE_HEADER)) {
+		if (!values.containsKey(valuesHeader)) {
 			throw new IllegalStateException("Report does not contain date column");
 		}
 		
-		return Collections.singletonList(values.get(VALUE_HEADER).get(getIndexOfLastDay()).intValue());
+		return Collections.singletonList(values.get(valuesHeader).get(getIndexOfLastDay()).intValue());
 	}
 	
 	private int sum(List<Long> ll) {
@@ -212,43 +231,32 @@ public class Report {
 		
 		Map <String,Integer> views = new HashMap<String, Integer>();
 		
-		List<String> titles = new LinkedList<String>();
-		for (String s : columnHeaders) {
-			if (!s.equals(DATE_HEADER) && !s.equals(RAW_HEADER) && !s.equals(VALUE_HEADER)) {
-				titles.add(s);
-			}
-		}
-		
-		for (String title : titles) {
-			views.put(title, sum(values.get(title)));
+		List<Long> values = (List<Long>) this.values.get(valuesHeader);
+		for(int i = 0 ;i<values.size();i++){
+			views.put(videosIds.get(i), values.get(i).intValue());
 		}
 		
 		return views;
 	}
 	
-	//TODO pobranie listy wyswietlen dla 10 najlepszych filmow, mapa<nazwa, wyswietlenia>
-	// pobranie dla ostatniego dnia
-	public Map<String,Integer> getTopViewsListDaily(){
-//		Map <String,Integer> mock = new HashMap<String, Integer>();
-//		mock.put("super video na ten tydzien",new Integer(12));
-//		mock.put("inne video na ten tydzien",new Integer(12312));
-//		mock.put("hit",new Integer(12121));
-//		return mock;
+	public Map<String,Integer> getViewsListDaily() {
 		
-		//Powinno dzia³aæ, poniewa¿ w zapytaniu bêdzie ograniczenie do 10 filmów
-		return getViewsList();
+		Map <String,Integer> views = new HashMap<String, Integer>();
+		
+		List<Long> values = (List<Long>) this.values.get(valuesHeader);
+		for(int i = 0 ;i<values.size();i++){
+			views.put(videosIds.get(i), values.get(i).intValue());
+		}
+		
+		return views;
 	}
 	
-	//TODO pobranie listy wyswietlen dla 10 najlepszych filmow, mapa<nazwa, wyswietlenia>
-		// pobranie dla ostatniego tygodnia
+
+	public Map<String,Integer> getTopViewsListDaily(){
+		return getViewsListDaily();
+	}
+	
 	public Map<String,Integer> getTopViewsListWeekly(){
-//		Map <String,Integer> mock = new HashMap<String, Integer>();
-//		mock.put("super video na ten tydzien",new Integer(121212));
-//		mock.put("inne video na ten tydzien",new Integer(12212));
-//		mock.put("hit",new Integer(1212122));
-//		return mock;
-		
-		//Powinno dzia³aæ, poniewa¿ zapytanie bêdzie w sobie zawieraæ informacjê, ze jest dla ostatniego tygodnia
 		return getViewsList();
 	}
 	
@@ -301,6 +309,8 @@ public class Report {
 		return true;
 	}
 	
-	
+	public void setAdditionalReport(Report report){
+		this.additionalReport=report;
+	}
 	
 }

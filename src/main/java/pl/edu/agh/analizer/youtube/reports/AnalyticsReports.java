@@ -120,10 +120,22 @@ public class AnalyticsReports {
 		return query.execute();
 	}
 	
-	public ResultTable executeTopVideosQuery(String channelID, String startDate, String endDate) throws IOException {
+	public ResultTable executeTopVideosWeeklyQuery(String channelID, String startDate, String endDate) throws IOException {
 		
 		Query query = prepareQuery(analytics, channelID, startDate, endDate, "views,subscribersGained,subscribersLost", "video", "-views");
 		return query.setMaxResults(10).execute();
 	}
+	
+	public ResultTable executeTopVideosDailyQuery(String channelID, String startDate, String endDate) throws IOException {
+		
+		Query query = prepareQuery(analytics, channelID, endDate, endDate, "views,subscribersGained,subscribersLost", "video", "-views");
+		return query.setMaxResults(10).execute();
+	}
 
+	public ResultTable executeAllVideosQuery(String channelID, String startDate, String endDate) throws IOException {
+		
+		Query query = prepareQuery(analytics, channelID, startDate, endDate, "views,subscribersGained,subscribersLost", "video", "-views");
+		return query.setMaxResults(10).execute();
+	}
+	
 }

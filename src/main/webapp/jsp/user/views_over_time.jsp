@@ -100,7 +100,7 @@
 
 		for (var i = 0; i < rawLabels.length; i++) {
 			var date = new Date(rawLabels[i]);
-			var label = date.getDay() + "-" + date.getMonth() + "-"
+			var label = date.getUTCDate()+1 + "-" + (date.getMonth()+1) + "-"
 					+ date.getFullYear();
 			labels.push(label);
 		}

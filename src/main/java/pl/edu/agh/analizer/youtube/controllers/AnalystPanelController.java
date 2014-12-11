@@ -69,6 +69,7 @@ public class AnalystPanelController {
         }
         
 		ResultTable rs = null;
+		ResultTable additionalRs = null;
 		AnalyticsReports analyticsReport = new AnalyticsReports();
 		Report youtubeReport;
 
@@ -80,13 +81,14 @@ public class AnalystPanelController {
 			}
 		} else if (report.getAnalysis().equals(ReportHelper.TOP_VIDEOS_ALL)) {
 			try {
-				rs = analyticsReport.executeTopVideosQuery(report.getChannelId(), report.getAnalysisStartDate(), report.getAnalysisEndDate());
+				rs = analyticsReport.executeAllVideosQuery(report.getChannelId(), report.getAnalysisStartDate(), report.getAnalysisEndDate());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else if (report.getAnalysis().equals(ReportHelper.TOP_VIDEOS_10)) {
 			try {
-				rs = analyticsReport.executeTopVideosQuery(report.getChannelId(), report.getAnalysisStartDate(), report.getAnalysisEndDate());
+				additionalRs = analyticsReport.executeTopVideosDailyQuery(report.getChannelId(), report.getAnalysisStartDate(), report.getAnalysisEndDate());
+				rs = analyticsReport.executeTopVideosWeeklyQuery(report.getChannelId(), report.getAnalysisStartDate(), report.getAnalysisEndDate());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -95,11 +97,19 @@ public class AnalystPanelController {
 		if (rs != null) {
 			System.out.println(rs);
 			youtubeReport = Report.ofResultTable(rs, report.getTitle(),report.getAnalysis());
+			if(additionalRs!=null){
+				Report additionalReport = Report.ofResultTable(additionalRs, report.getTitle(),report.getAnalysis());
+				youtubeReport.setAdditionalReport(additionalReport);
+			}
+			System.out.println(reportDAO);
 			if (!youtubeReport.getTitle().equals("EMPTY"))
 				reportDAO.insertReport(youtubeReport, user.getName());
 		}
-
-		return new ModelAndView("analyst/panel");
+		ModelAndView modelAndView = new ModelAndView("analyst/panel");
+		modelAndView.addObject("report",new ReportHelper());
+		userAnalysisList = reportDAO.selectUsersReportsNames(user.getName());
+		modelAndView.addObject("analysis", userAnalysisList);
+		return modelAndView;
 	}
 	
 	/**Method that intercepts HTTP GET requests to analyst/remove.

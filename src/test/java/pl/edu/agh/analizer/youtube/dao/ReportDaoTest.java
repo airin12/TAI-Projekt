@@ -40,13 +40,13 @@ public class ReportDaoTest {
 	@BeforeClass
 	public static void initReport() {
 		
-		List<String> columnHeaders = Lists.newArrayList("DATE", "VALUE_HEADER");
+		List<String> columnHeaders = Lists.newArrayList("day", "views");
 		String title = "TEST";
 		String type = "TESTTYPE";
 		Map<String, List<Long>> values = new HashMap<String, List<Long>>();
 		
-		values.put("DATE", Lists.newArrayList(1l,2l,3l,4l));
-		values.put("VALUE_HEADER", Lists.newArrayList(5l,6l,7l,8l));
+		values.put("day", Lists.newArrayList(1l,2l,3l,4l));
+		values.put("views", Lists.newArrayList(5l,6l,7l,8l));
 		
 		report = new Report(columnHeaders, values, title, type);
 	}

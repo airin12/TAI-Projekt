@@ -19,5 +19,10 @@
 	<bean id="userDao" class="pl.edu.agh.analizer.youtube.dao.UserDaoImpl">
 		<property name="transactionManager" ref="transactionManager"/>
 	</bean>
+	
+	<bean id="reportDao" class="pl.edu.agh.analizer.youtube.dao.ReportDaoImpl">
+		<property name="transactionManager" ref="transactionManager"/>
+	</bean>
+	
 
 </beans>

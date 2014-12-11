@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import pl.edu.agh.analizer.youtube.dao.DatabaseDao;
+import pl.edu.agh.analizer.youtube.dao.ReportDao;
 import pl.edu.agh.analizer.youtube.reports.AnalyticsReports;
 import pl.edu.agh.analizer.youtube.reports.Report;
 import pl.edu.agh.analizer.youtube.reports.ReportHelper;
@@ -26,6 +27,9 @@ import com.google.api.services.youtubeAnalytics.model.ResultTable;
 public class AnalystPanelController {
 
 	private List<String> userAnalysisList = null;
+	
+	@Autowired
+	private ReportDao reportDAO;
 
 	/**
 	 * Method that intercepts HTTP GET requests to /analyst/panel. Fills model with necessary objects.
@@ -36,7 +40,7 @@ public class AnalystPanelController {
 	 */
 	@RequestMapping(value = "/panel", method = RequestMethod.GET)
 	public ModelAndView showAnalystPanel(ModelAndView modelAndView, Principal user) {
-		userAnalysisList = DatabaseDao.getUsersReportsNames(user.getName());
+		userAnalysisList = reportDAO.selectUsersReportsNames(user.getName());
 		modelAndView.addObject("analysis", userAnalysisList);
 		modelAndView.getModel().put("report", new ReportHelper());
 		return modelAndView;
@@ -92,7 +96,7 @@ public class AnalystPanelController {
 			System.out.println(rs);
 			youtubeReport = Report.ofResultTable(rs, report.getTitle(),report.getAnalysis());
 			if (!youtubeReport.getTitle().equals("EMPTY"))
-				DatabaseDao.addReport(youtubeReport, user.getName());
+				reportDAO.insertReport(youtubeReport, user.getName());
 		}
 
 		return new ModelAndView("analyst/panel");
@@ -107,9 +111,9 @@ public class AnalystPanelController {
 	 * @return new modelAndView object that with updated data
 	 */
 	@RequestMapping(value = "/remove", method = RequestMethod.GET)
-	public ModelAndView removeAnalysis(@RequestParam(value = "title", required = true) String title, ModelAndView modelAndView, Principal user) {
-		if(DatabaseDao.removeRaport(title))
-			userAnalysisList=DatabaseDao.getUsersReportsNames(user.getName());
+	public ModelAndView removeAnalysis(@RequestParam(value = "title", required = true) String title, ModelAndView modelAndView, Principal user) {	
+		reportDAO.deleteReport(title);
+		userAnalysisList=reportDAO.selectUsersReportsNames(user.getName());
 		ModelAndView newModelAndView = new ModelAndView("analyst/panel");
 		newModelAndView.addObject("analysis", userAnalysisList);
 		newModelAndView.getModel().put("report", new ReportHelper());

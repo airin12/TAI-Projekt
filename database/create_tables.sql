@@ -87,6 +87,7 @@ CREATE TABLE analysis_row
   id serial NOT NULL,
   analysisid serial NOT NULL,
   row_number integer,
+  analysis_type character varying(45),
   CONSTRAINT analysis_row_pkey PRIMARY KEY (id),
   CONSTRAINT analysis_row_analysis_id_fkey FOREIGN KEY (analysisid)
       REFERENCES analysis (id) MATCH SIMPLE

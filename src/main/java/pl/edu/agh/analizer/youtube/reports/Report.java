@@ -151,6 +151,20 @@ public class Report {
 		return columnHeaders;
 	}
 	
+	private int getIndexOfLastDay() {
+		long greatest = 0;
+		int index = 0;
+		
+		for (int i = 0; i < rowCount; i++) {
+			if (values.get(DATE_HEADER).get(i) > greatest) {
+				greatest = values.get(DATE_HEADER).get(i);
+				index = i;
+			}
+		}
+		
+		return index;
+	}
+	
 	//TODO labelki do wykresu z ostatniego tygodnia, data jako long
 	public List<Long> getChartLabelsFromWeek(){
 
@@ -160,55 +174,133 @@ public class Report {
 
 	//TODO dane do wykresu z ostatniego tygodnia
 	public List<Integer> getChartDataFromWeek(){
-
 		return valuesList;
 	}
 	
 	//TODO labelki do wykresu z ostatniego dnia, data jako long
 	public List<Long> getChartLabelsFromDay(){
+		
+		if (!values.containsKey(DATE_HEADER)) {
+			throw new IllegalStateException("Report does not contain date column");
+		}
+		
+		return Collections.singletonList(values.get(DATE_HEADER).get(getIndexOfLastDay()));
 
-		System.out.println(labels);
-		return labels.subList(0, 1);
+//		System.out.println(labels);
+//		return labels.subList(0, 1);
 	}
 
 	//TODO dane do wykresu z ostatniego dnia
 	public List<Integer> getChartDataFromDay(){
 
-		return valuesList.subList(0, 1);
+		if (!values.containsKey(VALUE_HEADER)) {
+			throw new IllegalStateException("Report does not contain date column");
+		}
+		
+		return Collections.singletonList(values.get(VALUE_HEADER).get(getIndexOfLastDay()).intValue());
 	}
 	
-	//TODO pobranie listy wszystkich filmow, mapa <nazwa,wyswietlenia>, sortowanie jest w kontrolerze
-	// tutaj nie ma rozroznienia na okresy czasowe dlatego jedna metoda
-	public Map<String,Integer> getViewsList(){
-		Map <String,Integer> mock = new HashMap<String, Integer>();
-		mock.put("super video",new Integer(121212));
-		mock.put("super zw",new Integer(121));
-		mock.put("best",new Integer(555212));
-		return mock;
+	private int sum(List<Long> ll) {
+		int s = 0;
+		for (long l : ll) {
+			s += (int)l;
+		}
+		return s;
+	}
+	
+	public Map<String,Integer> getViewsList() {
+		
+		Map <String,Integer> views = new HashMap<String, Integer>();
+		
+		List<String> titles = new LinkedList<String>();
+		for (String s : columnHeaders) {
+			if (!s.equals(DATE_HEADER) && !s.equals(RAW_HEADER) && !s.equals(VALUE_HEADER)) {
+				titles.add(s);
+			}
+		}
+		
+		for (String title : titles) {
+			views.put(title, sum(values.get(title)));
+		}
+		
+		return views;
 	}
 	
 	//TODO pobranie listy wyswietlen dla 10 najlepszych filmow, mapa<nazwa, wyswietlenia>
 	// pobranie dla ostatniego dnia
 	public Map<String,Integer> getTopViewsListDaily(){
-		Map <String,Integer> mock = new HashMap<String, Integer>();
-		mock.put("super video na ten tydzien",new Integer(12));
-		mock.put("inne video na ten tydzien",new Integer(12312));
-		mock.put("hit",new Integer(12121));
-		return mock;
+//		Map <String,Integer> mock = new HashMap<String, Integer>();
+//		mock.put("super video na ten tydzien",new Integer(12));
+//		mock.put("inne video na ten tydzien",new Integer(12312));
+//		mock.put("hit",new Integer(12121));
+//		return mock;
+		
+		//Powinno dzia³aæ, poniewa¿ w zapytaniu bêdzie ograniczenie do 10 filmów
+		return getViewsList();
 	}
 	
 	//TODO pobranie listy wyswietlen dla 10 najlepszych filmow, mapa<nazwa, wyswietlenia>
 		// pobranie dla ostatniego tygodnia
 	public Map<String,Integer> getTopViewsListWeekly(){
-		Map <String,Integer> mock = new HashMap<String, Integer>();
-		mock.put("super video na ten tydzien",new Integer(121212));
-		mock.put("inne video na ten tydzien",new Integer(12212));
-		mock.put("hit",new Integer(1212122));
-		return mock;
+//		Map <String,Integer> mock = new HashMap<String, Integer>();
+//		mock.put("super video na ten tydzien",new Integer(121212));
+//		mock.put("inne video na ten tydzien",new Integer(12212));
+//		mock.put("hit",new Integer(1212122));
+//		return mock;
+		
+		//Powinno dzia³aæ, poniewa¿ zapytanie bêdzie w sobie zawieraæ informacjê, ze jest dla ostatniego tygodnia
+		return getViewsList();
 	}
 	
 	public String getType(){
 		return reportType;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((columnHeaders == null) ? 0 : columnHeaders.hashCode());
+		result = prime * result
+				+ ((reportType == null) ? 0 : reportType.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		result = prime * result + ((values == null) ? 0 : values.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Report other = (Report) obj;
+		if (columnHeaders == null) {
+			if (other.columnHeaders != null)
+				return false;
+		} else if (!columnHeaders.equals(other.columnHeaders))
+			return false;
+		if (reportType == null) {
+			if (other.reportType != null)
+				return false;
+		} else if (!reportType.equals(other.reportType))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		if (values == null) {
+			if (other.values != null)
+				return false;
+		} else if (!values.equals(other.values))
+			return false;
+		return true;
+	}
+	
+	
 	
 }

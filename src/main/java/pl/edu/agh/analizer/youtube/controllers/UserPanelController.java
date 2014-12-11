@@ -2,13 +2,14 @@ package pl.edu.agh.analizer.youtube.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import pl.edu.agh.analizer.youtube.dao.DatabaseDao;
+import pl.edu.agh.analizer.youtube.dao.ReportDao;
 import pl.edu.agh.analizer.youtube.reports.Report;
 import pl.edu.agh.analizer.youtube.reports.ReportHelper;
 import pl.edu.agh.analizer.youtube.util.SortingUtil;
@@ -20,6 +21,9 @@ public class UserPanelController {
 	private List<String> analysisList = null;
 	private Report report = null;
 
+	@Autowired
+	private ReportDao reportDAO;
+	
 	/**
 	 * Method that intercepts HTTP GET requests to user/panel.
 	 * 
@@ -28,7 +32,7 @@ public class UserPanelController {
 	 */
 	@RequestMapping(value = "/panel", method = RequestMethod.GET)
 	public ModelAndView showUserPanel(ModelAndView modelAndView) {
-		analysisList = DatabaseDao.getReportsNames();
+		analysisList = reportDAO.selectReportsNames();
 		modelAndView.addObject("analysis", analysisList);
 		return modelAndView;
 	}
@@ -42,7 +46,7 @@ public class UserPanelController {
 	 */
 	@RequestMapping(value = "/analysis", method = RequestMethod.GET)
 	public ModelAndView getAnalysisPage(@RequestParam(value = "title", required = true) String title) {
-		report = DatabaseDao.getReport(title);
+		report = reportDAO.selectReport(title);
 		ModelAndView modelAndView = new ModelAndView("user/" + report.getType());
 		modelAndView.addObject("title", report.getTitle());
 		setModelObjects(modelAndView, report.getType());

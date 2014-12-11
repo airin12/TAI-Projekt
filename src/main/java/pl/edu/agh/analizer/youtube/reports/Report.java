@@ -1,12 +1,15 @@
 package pl.edu.agh.analizer.youtube.reports;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.math.BigDecimal;
 
 import com.google.api.services.youtubeAnalytics.model.ResultTable;
 import com.google.api.services.youtubeAnalytics.model.ResultTable.ColumnHeaders;
@@ -33,6 +36,9 @@ public class Report {
 	
 	private final String VALUE_HEADER = "VALUE_HEADER";
 	
+	private static String labelsHeader;
+	private static String valuesHeader;
+	
 	private final String reportType;
 	
 	public Report(List<String> columnHeaders, Map<String, List<Long>> values, String title, String type) {
@@ -53,8 +59,8 @@ public class Report {
 		
 		
 		valuesList = new LinkedList<Integer>();
-		if (values.containsKey(VALUE_HEADER)) {
-			for (Long value : values.get(VALUE_HEADER)) {
+		if (values.containsKey(valuesHeader)) {
+			for (Long value : values.get(valuesHeader)) {
 				valuesList.add(value.intValue());
 			}
 		} else {
@@ -62,21 +68,11 @@ public class Report {
 		}
 		
 		labels = new LinkedList<Long>();
-		if (values.containsKey(DATE_HEADER)) {
-			//SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
-			SimpleDateFormat format = new SimpleDateFormat("mm");
-			for (Long l : values.get(DATE_HEADER)) {
+		if (values.containsKey(labelsHeader)) {
+			for (Long l : values.get(labelsHeader)) {
 				labels.add(l);  //-- pomysl zeby wrzucac longa z data
 			}
-		} else if (values.containsKey(RAW_HEADER)) {
-			for (Long l : values.get(RAW_HEADER)) {
-				labels.add(l); //-- pomysl zeby wrzucac longa z data
-			}
-		} else {
-			for (int i = 0; i < rowCount; i++) {
-				labels.add(new Long(i));
-			}
-		}
+		} 
 	}
 	
 	private Report() {
@@ -96,9 +92,15 @@ public class Report {
 			return EMPTY;
 		}
 		
+		if(type.equals(ReportHelper.VIEWS_OVER_TIME)){
+			labelsHeader="day";
+			valuesHeader="views";
+		}
+		
 		ArrayList<String> headers = new ArrayList<String>();
 		HashMap<String, List<Long>> values = new HashMap<String, List<Long>>();
 		
+		System.out.println(headers.size());
 		for (ColumnHeaders header : table.getColumnHeaders()) {
 			String headerName = header.getName();
 			headers.add(headerName);
@@ -108,7 +110,20 @@ public class Report {
 		for (List<Object> row : table.getRows()) {
 			for (int i = 0; i < table.getColumnHeaders().size(); i++) {
 				String headerName = table.getColumnHeaders().get(i).getName();
-				long value = Long.parseLong((String)row.get(i));
+				System.out.println(headerName);
+				long value = 0;
+				if(headerName.equals("day")){
+					String date = (String) row.get(i);
+					SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+					Date d = new Date();
+					try {
+						d = f.parse(date);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					value = d.getTime();
+				}else
+					value = ((BigDecimal) row.get(i)).longValue();
 				values.get(headerName).add(value);
 			}
 		}

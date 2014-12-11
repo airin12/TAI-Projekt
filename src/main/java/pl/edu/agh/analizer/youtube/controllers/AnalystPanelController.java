@@ -89,6 +89,7 @@ public class AnalystPanelController {
 		}
 
 		if (rs != null) {
+			System.out.println(rs);
 			youtubeReport = Report.ofResultTable(rs, report.getTitle(),report.getAnalysis());
 			if (!youtubeReport.getTitle().equals("EMPTY"))
 				DatabaseDao.addReport(youtubeReport, user.getName());
